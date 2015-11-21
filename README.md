@@ -47,7 +47,7 @@ Note: Configuration is the same for both client-side and server-side bundles.
 
 ```js
 import React, { PropTypes } from 'react';
-imoprt s from './MyComponent.scss';
+import s from './MyComponent.scss';
 
 function MyComponent(props, context) {
   context.insertCss(s);                           // <--
@@ -67,7 +67,7 @@ export default MyComponent;
 
 ```js
 import React, { Component, PropTypes } from 'react';
-imoprt s from './MyComponent.scss';
+import s from './MyComponent.scss';
 
 class MyComponent extends Component {
 
