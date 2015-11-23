@@ -10,8 +10,8 @@
 import path from 'path';
 import loaderUtils from 'loader-utils';
 
-module.exports = function() {};
-module.exports.pitch = function(remainingRequest) {
+module.exports = function loader() {};
+module.exports.pitch = function pitch(remainingRequest) {
   if (this.cacheable) {
     this.cacheable();
   }
@@ -37,7 +37,7 @@ module.exports.pitch = function(remainingRequest) {
     if (module.hot) {
       if (!content.locals) {
         module.hot.accept(${loaderUtils.stringifyRequest(this, '!!' + remainingRequest)}, function() {
-          let newContent = require(${loaderUtils.stringifyRequest(this, '!!' + remainingRequest)});
+          var newContent = require(${loaderUtils.stringifyRequest(this, '!!' + remainingRequest)});
           if (typeof newContent === 'string') {
             newContent = [[module.id, content, '']];
             update(newContent);
