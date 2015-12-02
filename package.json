@@ -1,6 +1,6 @@
 {
   "name": "isomorphic-style-loader",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Isomorphic CSS style loader for Webpack",
   "repository": "kriasoft/isomorphic-style-loader",
   "author": "Kriasoft <support@kriasoft.com> (http://www.kriasoft.com)",
