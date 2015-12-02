@@ -25,7 +25,7 @@ module.exports.pitch = function pitch(remainingRequest) {
     }
 
     module.exports = content.locals || {};
-    module.exports._getCss = () => content.toString();
+    module.exports._getCss = function() { return content.toString(); };
     module.exports._insertCss = insertCss.bind(null, content);
   `;
 
