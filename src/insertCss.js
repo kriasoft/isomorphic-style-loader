@@ -7,14 +7,27 @@
  * LICENSE.txt file in the root directory of this source tree.
  */
 
+const prefix = 's';
 const inserted = {};
+const canUseURL = typeof URL === 'function' &&
+  typeof URL.createObjectURL === 'function' &&
+  typeof URL.revokeObjectURL === 'function' &&
+  typeof Blob === 'function' &&
+  typeof btoa === 'function';
 
+/**
+ * Remove style/link elements for specified Module IDs
+ * if they are no longer referenced by UI components.
+ */
 function removeCss(ids) {
   for (const id of ids) {
     if (--inserted[id] === 0) {
-      const elem = document.getElementById('s' + id);
+      const elem = document.getElementById(prefix + id);
       if (elem) {
         elem.parentNode.removeChild(elem);
+        if (canUseURL && elem.tagName === 'STYLE' && elem.href) {
+          URL.revokeObjectURL(elem.href);
+        }
       }
     }
   }
@@ -29,7 +42,7 @@ function removeCss(ids) {
  *   removeCss();
  */
 function insertCss(styles, options) {
-  for (const [id, css, media] of styles) {
+  for (const [id, css, media, sourceMap] of styles) {
     if (inserted[id]) {
       inserted[id]++;
       continue;
@@ -37,22 +50,38 @@ function insertCss(styles, options) {
 
     inserted[id] = 1;
 
-    let elem = document.getElementById('s' + id);
+    const elem = sourceMap && canUseURL ?
+      document.createElement('link') :
+      document.createElement('style');
 
-    if (!elem) {
-      elem = document.createElement('style');
-      elem.id = 's' + id;
-      elem.setAttribute('type', 'text/css');
+    elem.id = prefix + id;
 
-      if (media) {
-        elem.setAttribute('media', media);
-      }
+    if (media) {
+      elem.setAttribute('media', media);
     }
 
-    if ('textContent' in elem) {
-      elem.textContent = css;
+    if (elem.tagName === 'STYLE') {
+      elem.setAttribute('type', 'text/css');
+
+      if ('textContent' in elem) {
+        elem.textContent = css;
+      } else {
+        elem.styleSheet.cssText = css;
+      }
     } else {
-      elem.styleSheet.cssText = css;
+      elem.setAttribute('rel', 'stylesheet');
+
+      const blob = new Blob([
+        css + '\n/*# sourceMappingURL=data:application/json;base64,' +
+        btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + ' */',
+      ], { type: 'text/css' });
+
+      const href = elem.href;
+      elem.href = URL.createObjectURL(blob);
+
+      if (href) {
+        URL.revokeObjectURL(href);
+      }
     }
 
     if (options && options.prepend) {
