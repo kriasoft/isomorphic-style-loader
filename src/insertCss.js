@@ -41,36 +41,50 @@ function removeCss(ids) {
  *   // Remove it from the DOM
  *   removeCss();
  */
-function insertCss(styles, options) {
+function insertCss(styles, options = {}) {
+  const { replace, prepend } = Object.assign({
+    replace: false,
+    prepend: false,
+  }, options);
+
   for (const [id, css, media, sourceMap] of styles) {
     if (inserted[id]) {
-      inserted[id]++;
-      continue;
+      if (!replace) {
+        inserted[id]++;
+        continue;
+      }
     }
 
     inserted[id] = 1;
 
-    const elem = sourceMap && canUseURL ?
-      document.createElement('link') :
-      document.createElement('style');
+    let elem = document.getElementById(prefix + id);
+    let create = false;
 
-    elem.id = prefix + id;
+    if (!elem) {
+      create = true;
 
-    if (media) {
-      elem.setAttribute('media', media);
+      if (sourceMap && canUseURL) {
+        elem = document.createElement('link');
+        elem.setAttribute('rel', 'stylesheet');
+      } else {
+        elem = document.createElement('style');
+        elem.setAttribute('type', 'text/css');
+      }
+
+      elem.id = prefix + id;
+
+      if (media) {
+        elem.setAttribute('media', media);
+      }
     }
 
     if (elem.tagName === 'STYLE') {
-      elem.setAttribute('type', 'text/css');
-
       if ('textContent' in elem) {
         elem.textContent = css;
       } else {
         elem.styleSheet.cssText = css;
       }
     } else {
-      elem.setAttribute('rel', 'stylesheet');
-
       const blob = new Blob([
         css + '\n/*# sourceMappingURL=data:application/json;base64,' +
         btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + ' */',
@@ -84,10 +98,12 @@ function insertCss(styles, options) {
       }
     }
 
-    if (options && options.prepend) {
-      document.head.insertBefore(elem, document.head.childNodes[0]);
-    } else {
-      document.head.appendChild(elem);
+    if (create) {
+      if (prepend) {
+        document.head.insertBefore(elem, document.head.childNodes[0]);
+      } else {
+        document.head.appendChild(elem);
+      }
     }
   }
 

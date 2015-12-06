@@ -30,21 +30,19 @@ module.exports.pitch = function pitch(remainingRequest) {
   `;
 
   output += this.debug ? `
-    var update = function() { /* TODO */ };
+    var removeCss = function() {};
 
     // Hot Module Replacement
-    // https://webpack.github.io/docs/hot-module-replacement.html
+    // https://webpack.github.io/docs/hot-module-replacement
     if (module.hot) {
-      if (!content.locals) {
-        module.hot.accept(${loaderUtils.stringifyRequest(this, '!!' + remainingRequest)}, function() {
-          var newContent = require(${loaderUtils.stringifyRequest(this, '!!' + remainingRequest)});
-          if (typeof newContent === 'string') {
-            newContent = [[module.id, content, '']];
-            update(newContent);
-          }
-        });
-        module.hot.dispose(function() { update(); });
-      }
+      module.hot.accept(${loaderUtils.stringifyRequest(this, '!!' + remainingRequest)}, function() {
+        var newContent = require(${loaderUtils.stringifyRequest(this, '!!' + remainingRequest)});
+        if (typeof newContent === 'string') {
+          newContent = [[module.id, content, '']];
+        }
+        removeCss = insertCss(newContent, { replace: true });
+      });
+      module.hot.dispose(function() { removeCss(); });
     }
   ` : '';
 
