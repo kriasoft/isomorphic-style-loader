@@ -6,7 +6,7 @@ import insertCss from '../src/insertCss';
 global.document = jsdom.jsdom('<!doctype html><html><body></body></html>');
 global.window = document.parentWindow;
 
-describe('insetCss(styles, options)', () => {
+describe('insertCss(styles, options)', () => {
   it('Should insert and remove <style> element', () => {
     const css = 'body { color: red; }';
     const removeCss = insertCss([[1, css]]);
