@@ -96,7 +96,14 @@ export default MyComponent;
 
 ##### Example 3: Using `withStyles` higher-order component
 
+```css
+// MyComponent.scss
+.root { padding: 10px; }
+.title { color: red; }
+```
+
 ```js
+// MyComponent.js
 import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './MyComponent.scss';
@@ -162,14 +169,14 @@ It should generate an HTML output similar to this one:
 <html>
   <head>
     <title>My Application</title>                                    
-    <script async src="app.js"></async>
-    <style>
+    <script async src="/client.js"></script>
+    <style type="text/css">
       .MyComponent_root_Hi8 { padding: 10px; }
       .MyComponent_title_e9Q { color: red; } 
     </style>
   </head>
   <body>
-    <div id="app">
+    <div id="root">
       <div class="MyComponent_root_Hi8" data-reactid=".cttboum80" data-react-checksum="564584530">
         <h1 class="MyComponent_title_e9Q" data-reactid=".cttboum80.0">Hello, World!</h1>
       </div>
