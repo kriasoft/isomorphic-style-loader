@@ -1,3 +1,4 @@
 {
-  "extends": "airbnb/base"
+  "extends": "airbnb",
+  "parser": "babel-eslint"
 }
