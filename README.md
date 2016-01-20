@@ -12,7 +12,9 @@
 > [style-loader](https://github.com/webpack/style-loader), but is optimized for
 > [isomorphic apps](http://nerds.airbnb.com/isomorphic-javascript-future-web-apps/).
 > In addition to what style-loader provides, it allow to render "critical CSS"
-> on a server, during server-side rendering (SSR).
+> on the server, during server-side rendering (SSR), by adding two helper
+> methods on to the `styles` object - `._insertCss()` (injects CSS into the DOM)
+> and `._getCss()` (returns CSS string).
 
 ### How to Install
 
@@ -41,62 +43,11 @@ $ npm install isomorphic-style-loader --save-dev
 }
 ```
 
-Note: Configuration is the same for both client-side and server-side bundles.
+**Note**: Configuration is the same for both client-side and server-side bundles.
 
-##### Example 1: Stateless React component:
+##### React component example
 
-```js
-import React, { PropTypes } from 'react';
-import s from './MyComponent.scss';
-
-function MyComponent(props, context) {
-  s._insertCss();                                 // <--
-  return (
-    <div className={s.root}>
-      <h1 className={s.title}>Hello, world!</h1>
-      <p><pre>{s._getCss()}</pre></p>
-    </div>
-  );
-}
-
-export default MyComponent;
-```
-
-##### Example 2: Statefull React component:
-
-```js
-import React, { Component, PropTypes } from 'react';
-import s from './MyComponent.scss';
-
-class MyComponent extends Component {
-
-  static contextTypes = { insertCss: PropTypes.func.isRequired };
-
-  componentWillMount() {
-    this.removeCss = s._insertCss();              // <--
-  }
-
-  componentWillUnmount() {
-    this.removeCss();                             // <--
-  }
-
-  render() {
-    return (
-      <div className={s.root}>
-        <h1 className={s.title}>Hello, world!</h1>
-        <p><pre>{s._getCss()}</pre></p>
-      </div>
-    );
-  }
-
-}
-
-export default MyComponent;
-```
-
-##### Example 3: Using `withStyles` higher-order component
-
-```css
+```scss
 // MyComponent.scss
 .root { padding: 10px; }
 .title { color: red; }
@@ -119,16 +70,12 @@ function MyComponent(props, context) {
 export default withStyles(MyComponent, s);        // <--
 ```
 
-### Server-side rendering
-
-In order to make these components isomorphic, you need to pass an arbitrary
-function to all of your React components via a custom `insertCss` context
-variable. See [Context API](https://facebook.github.io/react/docs/context)
-in React docs. This function might be as simple as `(styles) => styles._insertCss()`
-for the client-side code and `(styles) => { css.push(styles._getCss(); }` for
-the server-side code.
-
-Below is a server-side rendering example using this approach:
+**P.S.**: It works great with [CSS Modules](https://github.com/css-modules/css-modules)!
+Just decorate your React component with the [withStyles](https://github.com/kriasoft/isomorphic-style-loader/blob/master/src/withStyles.js)
+higher-order component, and pass a function to your React app via `insertCss`
+context variable (see [React's context API](https://facebook.github.io/react/docs/context))
+that either calls `styles._insertCss()` on a client, or `styles._getCss()`
+on the server. See server-side rendering example below:
 
 ```js
 import express from 'express';
