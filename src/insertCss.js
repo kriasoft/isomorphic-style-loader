@@ -15,17 +15,25 @@ const canUseURL = typeof URL === 'function' &&
   typeof Blob === 'function' &&
   typeof btoa === 'function';
 
+// Base64 encoding and decoding - The "Unicode Problem"
+// https://developer.mozilla.org/en-US/docs/Web/API/WindowBase64/Base64_encoding_and_decoding#The_Unicode_Problem
+function b64EncodeUnicode(str) {
+  return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, (match, p1) =>
+    String.fromCharCode('0x' + p1)
+  ));
+}
+
 /**
  * Remove style/link elements for specified Module IDs
  * if they are no longer referenced by UI components.
  */
 function removeCss(ids) {
   for (const id of ids) {
-    if (--inserted[id] === 0) {
+    if (--inserted[id] <= 0) {
       const elem = document.getElementById(prefix + id);
       if (elem) {
         elem.parentNode.removeChild(elem);
-        if (canUseURL && elem.tagName === 'STYLE' && elem.href) {
+        if (canUseURL && elem.tagName === 'LINK' && elem.href) {
           URL.revokeObjectURL(elem.href);
         }
       }
@@ -41,7 +49,7 @@ function removeCss(ids) {
  *   // Remove it from the DOM
  *   removeCss();
  */
-function insertCss(styles, options = {}) {
+function insertCss(styles, options) {
   const { replace, prepend } = Object.assign({
     replace: false,
     prepend: false,
@@ -87,7 +95,7 @@ function insertCss(styles, options = {}) {
     } else {
       const blob = new Blob([
         css + '\n/*# sourceMappingURL=data:application/json;base64,' +
-        btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + ' */',
+        b64EncodeUnicode(JSON.stringify(sourceMap)) + ' */',
       ], { type: 'text/css' });
 
       const href = elem.href;
