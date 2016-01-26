@@ -14,7 +14,7 @@ function withStyles(ComposedComponent, ...styles) {
     static contextTypes = {
       insertCss: PropTypes.func.isRequired,
     };
-    
+
     static displayName = ComposedComponent.displayName || ComposedComponent.name;
 
     componentWillMount() {

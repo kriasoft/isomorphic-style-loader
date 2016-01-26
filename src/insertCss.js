@@ -19,7 +19,7 @@ const canUseURL = typeof URL === 'function' &&
 // https://developer.mozilla.org/en-US/docs/Web/API/WindowBase64/Base64_encoding_and_decoding#The_Unicode_Problem
 function b64EncodeUnicode(str) {
   return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, (match, p1) =>
-    String.fromCharCode('0x' + p1)
+    String.fromCharCode(`0x${p1}`)
   ));
 }
 
@@ -94,8 +94,8 @@ function insertCss(styles, options) {
       }
     } else {
       const blob = new Blob([
-        css + '\n/*# sourceMappingURL=data:application/json;base64,' +
-        b64EncodeUnicode(JSON.stringify(sourceMap)) + ' */',
+        `${css}\n/*# sourceMappingURL=data:application/json;base64,` +
+        `${b64EncodeUnicode(JSON.stringify(sourceMap))} */`,
       ], { type: 'text/css' });
 
       const href = elem.href;
