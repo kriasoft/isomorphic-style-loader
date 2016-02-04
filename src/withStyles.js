@@ -9,13 +9,18 @@
 
 import React, { Component, PropTypes } from 'react';
 
+function getDisplayName(ComposedComponent) {
+  return ComposedComponent.displayName || ComposedComponent.name || 'Component';
+}
+
 function withStyles(ComposedComponent, ...styles) {
-  return class Styles extends Component {
+  return class WithStyles extends Component {
     static contextTypes = {
       insertCss: PropTypes.func.isRequired,
     };
 
-    static displayName = ComposedComponent.displayName || ComposedComponent.name;
+    static displayName = `WithStyles(${getDisplayName(ComposedComponent)})`;
+    static ComposedComponent = ComposedComponent;
 
     componentWillMount() {
       this.removeCss = this.context.insertCss.apply(undefined, styles);
