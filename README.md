@@ -6,8 +6,6 @@
 [![Dependency Status](http://img.shields.io/david/kriasoft/isomorphic-style-loader.svg?style=flat-square)](https://david-dm.org/kriasoft/isomorphic-style-loader)
 [![Chat](http://img.shields.io/badge/chat_room-%23react--starter--kit-blue.svg?style=flat-square)](https://gitter.im/kriasoft/react-starter-kit)
 
-(early preview)
-
 > An alternative CSS style loader, which works similarly to
 > [style-loader](https://github.com/webpack/style-loader), but is optimized for
 > [isomorphic apps](http://nerds.airbnb.com/isomorphic-javascript-future-web-apps/).
