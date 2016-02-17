@@ -151,7 +151,7 @@ will be removed from the DOM.
 
 ### License
 
-The MIT License © 2015 Kriasoft, LLC. All rights reserved.
+The MIT License © 2015-2016 Kriasoft, LLC. All rights reserved.
 
 ---
 Made with ♥ by Konstantin Tarkus ([@koistya](https://twitter.com/koistya)) and [contributors](https://github.com/kriasoft/isomorphic-style-loader/graphs/contributors)
