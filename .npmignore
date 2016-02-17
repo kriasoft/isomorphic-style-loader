@@ -5,5 +5,5 @@
 .gitattributes
 .gitignore
 .npmignore
-.travis.xml
+.travis.yml
 test
