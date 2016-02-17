@@ -11,10 +11,11 @@
 > An alternative CSS style loader, which works similarly to
 > [style-loader](https://github.com/webpack/style-loader), but is optimized for
 > [isomorphic apps](http://nerds.airbnb.com/isomorphic-javascript-future-web-apps/).
-> In addition to what style-loader provides, it allow to render "critical CSS"
-> on the server, during server-side rendering (SSR), by adding two helper
-> methods on to the `styles` object - `._insertCss()` (injects CSS into the DOM)
-> and `._getCss()` (returns CSS string).
+> In addition to what style-loader provides, it allow to render
+> [critical path CSS](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/)
+> during server-side rendering (SSR), by adding two helper methods on to the
+> `styles` object - `._insertCss()` (injects CSS into the DOM) and `._getCss()`
+> (returns CSS string).
 
 ### How to Install
 
