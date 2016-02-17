@@ -9,11 +9,6 @@
 
 const prefix = 's';
 const inserted = {};
-const canUseURL = typeof URL === 'function' &&
-  typeof URL.createObjectURL === 'function' &&
-  typeof URL.revokeObjectURL === 'function' &&
-  typeof Blob === 'function' &&
-  typeof btoa === 'function';
 
 // Base64 encoding and decoding - The "Unicode Problem"
 // https://developer.mozilla.org/en-US/docs/Web/API/WindowBase64/Base64_encoding_and_decoding#The_Unicode_Problem
@@ -33,9 +28,6 @@ function removeCss(ids) {
       const elem = document.getElementById(prefix + id);
       if (elem) {
         elem.parentNode.removeChild(elem);
-        if (canUseURL && elem.tagName === 'LINK' && elem.href) {
-          URL.revokeObjectURL(elem.href);
-        }
       }
     }
   }
@@ -76,14 +68,8 @@ function insertCss(styles, options) {
     if (!elem) {
       create = true;
 
-      if (sourceMap && canUseURL) {
-        elem = document.createElement('link');
-        elem.setAttribute('rel', 'stylesheet');
-      } else {
-        elem = document.createElement('style');
-        elem.setAttribute('type', 'text/css');
-      }
-
+      elem = document.createElement('style');
+      elem.setAttribute('type', 'text/css');
       elem.id = prefix + id;
 
       if (media) {
@@ -91,24 +77,17 @@ function insertCss(styles, options) {
       }
     }
 
-    if (elem.tagName === 'STYLE') {
-      if ('textContent' in elem) {
-        elem.textContent = css;
-      } else {
-        elem.styleSheet.cssText = css;
-      }
+    let cssText = css;
+    if (sourceMap) {
+      cssText += `\n/*# sourceMappingURL=data:application/json;base64,${
+        b64EncodeUnicode(JSON.stringify(sourceMap))}*/`;
+      cssText += `\n/*# sourceURL=${sourceMap.file}*/`;
+    }
+
+    if ('textContent' in elem) {
+      elem.textContent = cssText;
     } else {
-      const blob = new Blob([
-        `${css}\n/*# sourceMappingURL=data:application/json;base64,` +
-        `${b64EncodeUnicode(JSON.stringify(sourceMap))} */`,
-      ], { type: 'text/css' });
-
-      const href = elem.href;
-      elem.href = URL.createObjectURL(blob);
-
-      if (href) {
-        URL.revokeObjectURL(href);
-      }
+      elem.styleSheet.cssText = cssText;
     }
 
     if (create) {
