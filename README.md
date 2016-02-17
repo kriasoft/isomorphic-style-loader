@@ -154,4 +154,4 @@ will be removed from the DOM.
 The MIT License © 2015 Kriasoft, LLC. All rights reserved.
 
 ---
-Made with ♥ by Konstantin Tarkus ([@koistya](https://twitter.com/koistya))
+Made with ♥ by Konstantin Tarkus ([@koistya](https://twitter.com/koistya)) and [contributors](https://github.com/kriasoft/isomorphic-style-loader/graphs/contributors)

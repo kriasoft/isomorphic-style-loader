@@ -5,7 +5,8 @@
   "repository": "kriasoft/isomorphic-style-loader",
   "author": "Kriasoft <support@kriasoft.com> (http://www.kriasoft.com)",
   "contributors": [
-    "Konstantin Tarkus <hello@tarkus.me>"
+    "Konstantin Tarkus <hello@tarkus.me>",
+    "Vladimir Kutepov <frenzzy.man@gmail.com>"
   ],
   "keywords": [
     "webpack",
