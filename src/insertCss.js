@@ -24,7 +24,7 @@ function b64EncodeUnicode(str) {
 }
 
 /**
- * Remove style/link elements for specified Module IDs
+ * Remove style/link elements for specified node IDs
  * if they are no longer referenced by UI components.
  */
 function removeCss(ids) {
@@ -55,7 +55,11 @@ function insertCss(styles, options) {
     prepend: false,
   }, options);
 
-  for (const [id, css, media, sourceMap] of styles) {
+  const ids = [];
+  for (let i = 0; i < styles.length; i++) {
+    const [moduleId, css, media, sourceMap] = styles[i];
+    const id = `${moduleId}-${i}`;
+
     if (inserted[id]) {
       if (!replace) {
         inserted[id]++;
@@ -64,6 +68,7 @@ function insertCss(styles, options) {
     }
 
     inserted[id] = 1;
+    ids.push(id);
 
     let elem = document.getElementById(prefix + id);
     let create = false;
@@ -115,7 +120,7 @@ function insertCss(styles, options) {
     }
   }
 
-  return removeCss.bind(null, styles.map(x => x[0]));
+  return removeCss.bind(null, ids);
 }
 
 module.exports = insertCss;
