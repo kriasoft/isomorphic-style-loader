@@ -52,6 +52,8 @@ function insertCss(styles, options) {
     const [moduleId, css, media, sourceMap] = styles[i];
     const id = `${moduleId}-${i}`;
 
+    ids.push(id);
+
     if (inserted[id]) {
       if (!replace) {
         inserted[id]++;
@@ -60,7 +62,6 @@ function insertCss(styles, options) {
     }
 
     inserted[id] = 1;
-    ids.push(id);
 
     let elem = document.getElementById(prefix + id);
     let create = false;
