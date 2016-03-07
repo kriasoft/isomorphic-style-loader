@@ -85,7 +85,7 @@ const server = express();
 const port = process.env.PORT || 3000;
 
 // Server-side rendering of the React app
-server.get('*', (req, res, next) => 
+server.get('*', (req, res, next) =>
   const css = []; // CSS for all rendered React components
   const context = { insertCss: (styles) => css.push(styles._getCss()) };
   router.dispatch({ ...req, context }).then((component, state) => {
@@ -114,11 +114,11 @@ It should generate an HTML output similar to this one:
 ```html
 <html>
   <head>
-    <title>My Application</title>                                    
+    <title>My Application</title>
     <script async src="/client.js"></script>
     <style type="text/css">
       .MyComponent_root_Hi8 { padding: 10px; }
-      .MyComponent_title_e9Q { color: red; } 
+      .MyComponent_title_e9Q { color: red; }
     </style>
   </head>
   <body>
@@ -137,6 +137,9 @@ section of HTML document. Critical CSS is what actually used on the
 requested web page, effectively dealing with [FOUC](https://en.wikipedia.org/wiki/Flash_of_unstyled_content)
 issue and improving client-side performance. CSS of the unmounted components
 will be removed from the DOM.
+
+##### Hot reload
+You can activate hot module reload for style by setting the `debug` option to true in your webpack configuration. If you are using webpack 2, you need to supply it though the `LoaderOptionsPlugin` because the [`debug` option has been removed](https://gist.github.com/sokra/27b24881210b56bbaff7#loader-options--minimize)
 
 ### Backers
 
