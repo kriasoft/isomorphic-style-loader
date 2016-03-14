@@ -11,7 +11,7 @@ describe('withStyles(ComposedComponent, ...styles)', () => {
   }
 
   it('Should set the displayName correctly', () => {
-    expect(withStyles(
+    expect(withStyles('')(
       class Foo extends Component {
         render() {
           return <div />;
@@ -19,7 +19,7 @@ describe('withStyles(ComposedComponent, ...styles)', () => {
       }
     ).displayName).to.equal('WithStyles(Foo)');
 
-    expect(withStyles(
+    expect(withStyles('')(
       createClass({
         displayName: 'Bar',
         render() {
@@ -28,7 +28,7 @@ describe('withStyles(ComposedComponent, ...styles)', () => {
       })
     ).displayName).to.equal('WithStyles(Bar)');
 
-    expect(withStyles(
+    expect(withStyles('')(
       createClass({
         render() {
           return <div />;
@@ -44,7 +44,7 @@ describe('withStyles(ComposedComponent, ...styles)', () => {
       }
     }
 
-    const decorated = withStyles(Container);
+    const decorated = withStyles('')(Container);
     expect(decorated.ComposedComponent).to.equal(Container);
   });
 });

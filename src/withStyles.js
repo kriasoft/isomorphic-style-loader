@@ -13,8 +13,8 @@ function getDisplayName(ComposedComponent) {
   return ComposedComponent.displayName || ComposedComponent.name || 'Component';
 }
 
-function withStyles(ComposedComponent, ...styles) {
-  return class WithStyles extends Component {
+function withStyles(...styles) {
+  return (ComposedComponent) => class WithStyles extends Component {
     static contextTypes = {
       insertCss: PropTypes.func.isRequired,
     };
