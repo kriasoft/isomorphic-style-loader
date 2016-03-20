@@ -30,8 +30,12 @@ function withStyles(...styles) {
       setTimeout(this.removeCss, 0);
     }
 
+    getComposedInstance() {
+      return this.refs.composedInstance;
+    }
+
     render() {
-      return <ComposedComponent {...this.props} />;
+      return <ComposedComponent ref="composedInstance" {...this.props} />;
     }
   };
 }
