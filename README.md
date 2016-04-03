@@ -138,6 +138,17 @@ requested web page, effectively dealing with [FOUC](https://en.wikipedia.org/wik
 issue and improving client-side performance. CSS of the unmounted components
 will be removed from the DOM.
 
+### Backers
+
+♥ Isomorphic Style Loader? Help us keep it alive by [donating funds](https://www.patreon.com/tarkus) to cover project expenses!
+
+<a href="https://github.com/koistya" target="_blank">
+  <img src="https://github.com/koistya.png?size=64">
+</a>
+<a href="https://www.patreon.com/bePatron?patAmt=25&amp;u=2475816" target="_blank">
+  <img src="https://opencollective.com/static/images/become_backer.svg">
+</a>
+
 ### Related Projects
 
  * [React Starter Kit](https://github.com/kriasoft/react-starter-kit) — Isomorphic web app boilerplate
