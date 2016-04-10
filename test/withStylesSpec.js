@@ -1,9 +1,22 @@
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
-import React, { createClass, Component } from 'react';
+import React, { createClass, Component, PropTypes } from 'react';
+import TestUtils from 'react-addons-test-utils';
 import withStyles from '../src/withStyles';
 
-describe('withStyles(ComposedComponent, ...styles)', () => {
+describe('withStyles(...styles)(ComposedComponent)', () => {
+  class Provider extends Component {
+    static childContextTypes = {
+      insertCss: PropTypes.func.isRequired,
+    };
+    getChildContext() {
+      return { insertCss() {} };
+    }
+    render() {
+      return <div {...this.props} />;
+    }
+  }
+
   class Passthrough extends Component {
     render() {
       return <div {...this.props} />;
@@ -44,7 +57,35 @@ describe('withStyles(ComposedComponent, ...styles)', () => {
       }
     }
 
-    const decorated = withStyles('')(Container);
-    expect(decorated.ComposedComponent).to.equal(Container);
+    const Decorated = withStyles('')(Container);
+    expect(Decorated.ComposedComponent).to.equal(Container);
+  });
+
+  it('Should return the instance of the composed component for use in calling child methods', () => {
+    const someData = { some: 'data' };
+
+    class Container extends Component {
+      someInstanceMethod() {
+        return someData;
+      }
+
+      render() {
+        return <Passthrough />;
+      }
+    }
+
+    const Decorated = withStyles('')(Container);
+
+    const tree = TestUtils.renderIntoDocument(
+      <Provider>
+        <Decorated />
+      </Provider>
+    );
+
+    const decorated = TestUtils.findRenderedComponentWithType(tree, Decorated);
+
+    expect(() => decorated.someInstanceMethod()).to.throw(Error);
+    expect(decorated.getComposedInstance().someInstanceMethod()).to.equal(someData);
+    expect(decorated.refs.composedInstance.someInstanceMethod()).to.equal(someData);
   });
 });
