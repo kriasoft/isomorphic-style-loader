@@ -27,22 +27,23 @@ module.exports.pitch = function pitch(remainingRequest) {
 
     module.exports = content.locals || {};
     module.exports._getCss = function() { return content.toString(); };
-    module.exports._insertCss = insertCss.bind(null, content);
+    module.exports._insertCss = function(options) { return insertCss(content, options) };
   `;
 
   output += this.debug ? `
-    var removeCss = function() {};
-
     // Hot Module Replacement
     // https://webpack.github.io/docs/hot-module-replacement
     // Only activated in browser context
     if (module.hot && typeof window !== 'undefined' && window.document) {
+      var removeCss = function() {};
       module.hot.accept(${stringifyRequest(this, `!!${remainingRequest}`)}, function() {
-        var newContent = require(${stringifyRequest(this, `!!${remainingRequest}`)});
-        if (typeof newContent === 'string') {
-          newContent = [[module.id, content, '']];
+        content = require(${stringifyRequest(this, `!!${remainingRequest}`)});
+
+        if (typeof content === 'string') {
+          content = [[module.id, content, '']];
         }
-        removeCss = insertCss(newContent, { replace: true });
+
+        removeCss = insertCss(content, { replace: true });
       });
       module.hot.dispose(function() { removeCss(); });
     }
