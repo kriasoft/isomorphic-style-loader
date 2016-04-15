@@ -1,9 +1,4 @@
 .idea
-.babelrc
-.editorconfig
-.eslintrc
-.gitattributes
-.gitignore
-.npmignore
 .travis.yml
+coverage
 test

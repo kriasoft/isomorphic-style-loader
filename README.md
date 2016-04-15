@@ -3,6 +3,7 @@
 [![NPM version](http://img.shields.io/npm/v/isomorphic-style-loader.svg?style=flat-square)](https://www.npmjs.com/package/isomorphic-style-loader)
 [![NPM downloads](http://img.shields.io/npm/dm/isomorphic-style-loader.svg?style=flat-square)](https://www.npmjs.com/package/isomorphic-style-loader)
 [![Build Status](http://img.shields.io/travis/kriasoft/isomorphic-style-loader/master.svg?style=flat-square)](https://travis-ci.org/kriasoft/isomorphic-style-loader)
+[![Coverage Status](https://img.shields.io/coveralls/kriasoft/isomorphic-style-loader.svg?style=flat-square)](https://coveralls.io/github/kriasoft/isomorphic-style-loader)
 [![Dependency Status](http://img.shields.io/david/kriasoft/isomorphic-style-loader.svg?style=flat-square)](https://david-dm.org/kriasoft/isomorphic-style-loader)
 [![Chat](http://img.shields.io/badge/chat_room-%23react--starter--kit-blue.svg?style=flat-square)](https://gitter.im/kriasoft/react-starter-kit)
 
@@ -138,8 +139,11 @@ requested web page, effectively dealing with [FOUC](https://en.wikipedia.org/wik
 issue and improving client-side performance. CSS of the unmounted components
 will be removed from the DOM.
 
-##### Hot reload
-You can activate hot module reload for style by setting the `debug` option to true in your webpack configuration. If you are using webpack 2, you need to supply it though the `LoaderOptionsPlugin` because the [`debug` option has been removed](https://gist.github.com/sokra/27b24881210b56bbaff7#loader-options--minimize)
+##### Hot Reload
+
+You can activate hot module reload for style by setting the `debug` option to true in your webpack
+configuration. If you are using webpack 2, you need to supply it though the `LoaderOptionsPlugin`
+because the [`debug` option has been removed](https://gist.github.com/sokra/27b24881210b56bbaff7#loader-options--minimize).
 
 ### Backers
 
