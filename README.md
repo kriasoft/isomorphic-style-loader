@@ -16,6 +16,10 @@
 > `styles` object - `._insertCss()` (injects CSS into the DOM) and `._getCss()`
 > (returns CSS string).
 
+See [getting started](#getting-started) &nbsp;|&nbsp; [changelog](CHANGELOG.md) &nbsp;|&nbsp;
+Join [#react-starter-kit](https://gitter.im/kriasoft/react-starter-kit) chat room on Gitter to stay
+up to date
+
 ### How to Install
 
 ```
