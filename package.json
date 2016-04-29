@@ -42,6 +42,7 @@
   },
   "dependencies": {
     "babel-runtime": "^6.6.1",
+    "hoist-non-react-statics": "^1.0.5",
     "loader-utils": "^0.2.14"
   },
   "devDependencies": {
