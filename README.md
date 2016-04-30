@@ -71,7 +71,7 @@ function MyComponent(props, context) {
   );
 }
 
-export default withStyles(MyComponent, s);        // <--
+export default withStyles(s)(MyComponent);        // <--
 ```
 
 **P.S.**: It works great with [CSS Modules](https://github.com/css-modules/css-modules)!
