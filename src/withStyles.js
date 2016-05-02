@@ -31,7 +31,7 @@ function withStyles(...styles) {
     }
 
     render() {
-      return <ComposedComponent {...this.props} />;
+      return <ComposedComponent ref="composedComponent" {...this.props} />;
     }
   };
 }
