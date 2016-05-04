@@ -17,12 +17,20 @@ module.exports.pitch = function pitch(remainingRequest) {
   }
 
   const insertCssPath = path.join(__dirname, './insertCss.js');
+  const createUniqueIdentifiersPath = path.join(__dirname, './createUniqueIdentifiers.js');
   let output = `
     var content = require(${stringifyRequest(this, `!!${remainingRequest}`)});
     var insertCss = require(${stringifyRequest(this, `!${insertCssPath}`)});
+    var createUniqueIdentifiers =
+      require(${stringifyRequest(this, `!${createUniqueIdentifiersPath}`)});
 
     if (typeof content === 'string') {
       content = [[module.id, content, '']];
+    } else {
+      var identifiers = content.map(x => x[0]);
+      createUniqueIdentifiers(identifiers).map((identifier, index) => {
+        content[index][0] = identifier;
+      })
     }
 
     module.exports = content.locals || {};

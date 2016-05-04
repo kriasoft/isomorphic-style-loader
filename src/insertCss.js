@@ -49,8 +49,7 @@ function insertCss(styles, options) {
 
   const ids = [];
   for (let i = 0; i < styles.length; i++) {
-    const [moduleId, css, media, sourceMap] = styles[i];
-    const id = `${moduleId}-${i}`;
+    const [id, css, media, sourceMap] = styles[i];
 
     ids.push(id);
 
