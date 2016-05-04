@@ -8,9 +8,10 @@
  */
 
 import jsdom from 'jsdom';
-import { describe, it } from 'mocha';
 import { expect } from 'chai';
 import insertCss from '../src/insertCss';
+
+const { describe, it } = global;
 
 global.document = jsdom.jsdom('<!doctype html><html><body></body></html>');
 global.window = document.parentWindow;
