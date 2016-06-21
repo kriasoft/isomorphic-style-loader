@@ -16,13 +16,15 @@ function getDisplayName(ComposedComponent) {
 function withStyles(...styles) {
   return (ComposedComponent) => class WithStyles extends Component {
     static contextTypes = {
-      insertCss: PropTypes.func.isRequired,
+      insertCss: PropTypes.func,
     };
 
     static displayName = `WithStyles(${getDisplayName(ComposedComponent)})`;
     static ComposedComponent = ComposedComponent;
 
     componentWillMount() {
+      // If insertCss function isn't supplied. Use a noop
+      this.context.insertCss = this.context.insertCss || (() => {});
       this.removeCss = this.context.insertCss.apply(undefined, styles);
     }
 

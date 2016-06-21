@@ -73,6 +73,7 @@
     "test:cover": "babel-node ./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "build": "rimraf lib && babel src --out-dir lib",
-    "prepublish": "rimraf lib && babel src --out-dir lib"
+    "prepublish": "rimraf lib && babel src --out-dir lib",
+    "postinstall": "npm install"
   }
 }
