@@ -9,11 +9,11 @@
 
 /* eslint-disable react/prefer-stateless-function */
 
-import { describe, it } from 'mocha';
 import { expect } from 'chai';
 import React, { createClass, Component } from 'react';
 import withStyles from '../src/withStyles';
 
+const { describe, it } = global;
 
 describe('withStyles(ComposedComponent, ...styles)', () => {
   class Passthrough extends Component {

@@ -8,7 +8,7 @@
  */
 
 const prefix = 's';
-const inserted = {};
+let inserted = {};
 
 // Base64 encoding and decoding - The "Unicode Problem"
 // https://developer.mozilla.org/en-US/docs/Web/API/WindowBase64/Base64_encoding_and_decoding#The_Unicode_Problem
@@ -49,8 +49,7 @@ function insertCss(styles, options) {
 
   const ids = [];
   for (let i = 0; i < styles.length; i++) {
-    const [moduleId, css, media, sourceMap] = styles[i];
-    const id = `${moduleId}-${i}`;
+    const [id, css, media, sourceMap] = styles[i];
 
     ids.push(id);
 
@@ -102,5 +101,9 @@ function insertCss(styles, options) {
 
   return removeCss.bind(null, ids);
 }
+
+insertCss._clearCache = () => {
+  inserted = {};
+};
 
 module.exports = insertCss;
