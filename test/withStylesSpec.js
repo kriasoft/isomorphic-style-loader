@@ -59,4 +59,28 @@ describe('withStyles(ComposedComponent, ...styles)', () => {
     const decorated = withStyles('')(Container);
     expect(decorated.ComposedComponent).to.equal(Container);
   });
+
+  it('Hoists non-react statics of the composed component', () => {
+    class Foo extends Component {
+      render() {
+        return <div />;
+      }
+    }
+    Foo.someStaticProperty = true;
+
+    const decorated = withStyles('')(Foo);
+    expect(decorated.someStaticProperty).to.equal(true);
+  });
+
+  it('Does not hoist react statics of the composed component', () => {
+    class Foo extends Component {
+      render() {
+        return <div />;
+      }
+    }
+    Foo.propTypes = true;
+
+    const decorated = withStyles('')(Foo);
+    expect(decorated.propTypes).to.not.equal(true);
+  });
 });
