@@ -82,7 +82,7 @@ function insertCss(styles, options) {
     if (sourceMap) {
       cssText += `\n/*# sourceMappingURL=data:application/json;base64,${
         b64EncodeUnicode(JSON.stringify(sourceMap))}*/`;
-      cssText += `\n/*# sourceURL=${sourceMap.file}*/`;
+      cssText += `\n/*# sourceURL=${id}*/`;
     }
 
     if ('textContent' in elem) {
