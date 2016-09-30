@@ -91,7 +91,7 @@ const port = process.env.PORT || 3000;
 
 // Server-side rendering of the React app
 server.get('*', (req, res, next) =>
-  const css = []; // CSS for all rendered React components
+  const css = new Set(); // CSS for all rendered React components
   const context = { insertCss: (...styles) => styles.forEach(style => css.push(style._getCss())); };
   router.dispatch({ ...req, context }).then((component, state) => {
     const body = ReactDOM.renderToString(component);
