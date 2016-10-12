@@ -3,8 +3,11 @@
 All notable changes to this project will be documented in this file.
 
 ### [Unreleased][unreleased]
-
 - Add `CHANGELOG.md` file with the past and future (planned) changes to the project
+
+> 2016-10-12
+
+- Add access to content to dedup server generated styles [PR#56](https://github.com/kriasoft/isomorphic-style-loader/pull/56)
 
 ### [v1.0.0]
 > 2016-04-15
