@@ -18,14 +18,14 @@ function withStyles(...styles) {
   return function wrapWithStyles(ComposedComponent) {
     class WithStyles extends Component {
       static contextTypes = {
-        insertCss: PropTypes.func.isRequired,
+        insertCss: PropTypes.func,
       };
 
       static displayName = `WithStyles(${getDisplayName(ComposedComponent)})`;
       static ComposedComponent = ComposedComponent;
 
       componentWillMount() {
-        this.removeCss = this.context.insertCss.apply(undefined, styles);
+        this.removeCss = this.context.insertCss && this.context.insertCss.apply(undefined, styles);
       }
 
       componentWillUnmount() {
