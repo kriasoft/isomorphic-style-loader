@@ -41,12 +41,7 @@ function removeCss(ids) {
  *   // Remove it from the DOM
  *   removeCss();
  */
-function insertCss(styles, options) {
-  const { replace, prepend } = Object.assign({
-    replace: false,
-    prepend: false,
-  }, options);
-
+function insertCss(styles, { replace = false, prepend = false } = {}) {
   const ids = [];
   for (let i = 0; i < styles.length; i++) {
     const [moduleId, css, media, sourceMap] = styles[i];
@@ -79,10 +74,10 @@ function insertCss(styles, options) {
     }
 
     let cssText = css;
-    if (sourceMap) {
+    if (sourceMap && btoa) { // skip IE9 and below, see http://caniuse.com/atob-btoa
       cssText += `\n/*# sourceMappingURL=data:application/json;base64,${
         b64EncodeUnicode(JSON.stringify(sourceMap))}*/`;
-      cssText += `\n/*# sourceURL=${id}*/`;
+      cssText += `\n/*# sourceURL=${sourceMap.file}?${id}*/`;
     }
 
     if ('textContent' in elem) {
