@@ -1,3 +1,5 @@
+<img src="https://cloud.githubusercontent.com/assets/8555194/19997705/b525f258-a268-11e6-831d-ce959ec212e8.png" width="150" height="150" />
+
 # Isomorphic CSS style loader for [Webpack](http://webpack.github.io)
 
 [![NPM version](http://img.shields.io/npm/v/isomorphic-style-loader.svg?style=flat-square)](https://www.npmjs.com/package/isomorphic-style-loader)
