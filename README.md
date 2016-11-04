@@ -1,4 +1,4 @@
-<img src="https://cloud.githubusercontent.com/assets/8555194/19997705/b525f258-a268-11e6-831d-ce959ec212e8.png" width="150" height="150" />
+<img src="https://cloud.githubusercontent.com/assets/8555194/19998202/ccab0da2-a26b-11e6-9c71-f0b904762c3b.png" width="150" height="150" />
 
 # Isomorphic CSS style loader for [Webpack](http://webpack.github.io)
 
