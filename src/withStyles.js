@@ -18,7 +18,14 @@ function withStyles(...styles) {
   return function wrapWithStyles(ComposedComponent) {
     class WithStyles extends Component {
       componentWillMount() {
-        this.removeCss = this.context.insertCss.apply(undefined, styles);
+        if (this.context.insertCss) {
+          this.removeCss = this.context.insertCss.apply(undefined, styles);
+        } else if (typeof document !== 'undefined') {
+          // eslint-disable-next-line no-underscore-dangle
+          this.removeCss = styles.forEach(style => style._insertCss());
+        } else {
+          throw new Error('Failed to insert CSS, ensure you are providing the insertCss function in context when rendering server side');
+        }
       }
 
       componentWillUnmount() {
