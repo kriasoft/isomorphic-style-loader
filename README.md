@@ -91,15 +91,15 @@ const port = process.env.PORT || 3000;
 
 // Server-side rendering of the React app
 server.get('*', (req, res, next) =>
-  const css = []; // CSS for all rendered React components
-  const context = { insertCss: (styles) => css.push(styles._getCss()) };
+  const css = new Set(); // CSS for all rendered React components
+  const context = { insertCss: (...styles) => styles.forEach(style => css.add(style._getCss())); };
   router.dispatch({ ...req, context }).then((component, state) => {
     const body = ReactDOM.renderToString(component);
     const html = `<!doctype html>
       <html>
         <head>
           <script async src="/client.js"></script>
-          <style type="text/css">${css.join('')}</style>
+          <style type="text/css">${[...css].join('')}</style>
         </head>
         <body>
           <div id="root">${body}</div>

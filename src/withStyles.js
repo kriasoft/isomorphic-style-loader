@@ -10,20 +10,13 @@
 import React, { Component, PropTypes } from 'react';
 import hoistStatics from 'hoist-non-react-statics';
 
-function getDisplayName(ComposedComponent) {
-  return ComposedComponent.displayName || ComposedComponent.name || 'Component';
-}
+const contextTypes = {
+  insertCss: PropTypes.func,
+};
 
 function withStyles(...styles) {
   return function wrapWithStyles(ComposedComponent) {
     class WithStyles extends Component {
-      static contextTypes = {
-        insertCss: PropTypes.func.isRequired,
-      };
-
-      static displayName = `WithStyles(${getDisplayName(ComposedComponent)})`;
-      static ComposedComponent = ComposedComponent;
-
       componentWillMount() {
         this.removeCss = this.context.insertCss.apply(undefined, styles);
       }
@@ -38,6 +31,12 @@ function withStyles(...styles) {
         return <ComposedComponent {...this.props} />;
       }
     }
+
+    const displayName = ComposedComponent.displayName || ComposedComponent.name || 'Component';
+
+    WithStyles.displayName = `WithStyles(${displayName})`;
+    WithStyles.contextTypes = contextTypes;
+    WithStyles.ComposedComponent = ComposedComponent;
 
     return hoistStatics(WithStyles, ComposedComponent);
   };

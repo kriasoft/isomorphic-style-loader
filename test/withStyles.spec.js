@@ -7,20 +7,58 @@
  * LICENSE.txt file in the root directory of this source tree.
  */
 
-/* eslint-disable react/prefer-stateless-function */
-
+import jsdom from 'jsdom';
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
-import React, { createClass, Component } from 'react';
+import sinon from 'sinon';
+import React, { createClass, Component, Children, PropTypes } from 'react';
+import ReactDOM from 'react-dom';
 import withStyles from '../src/withStyles';
 
+global.document = jsdom.jsdom('<!doctype html><html><body></body></html>');
+global.window = document.defaultView;
+global.navigator = global.window.navigator;
 
-describe('withStyles(ComposedComponent, ...styles)', () => {
-  class Passthrough extends Component {
-    render() {
-      return <div {...this.props} />;
+describe('withStyles(...styles)(WrappedComponent)', () => {
+  it('Should call insetCss and removeCss functions provided by context', (done) => {
+    class Provider extends Component {
+      getChildContext() {
+        return { insertCss: this.props.insertCss };
+      }
+
+      render() {
+        return Children.only(this.props.children);
+      }
     }
-  }
+
+    Provider.propTypes = {
+      insertCss: PropTypes.func.isRequired,
+      children: PropTypes.node.isRequired,
+    };
+
+    Provider.childContextTypes = {
+      insertCss: PropTypes.func.isRequired,
+    };
+
+    class Foo extends Component {
+      render() {
+        return <div />;
+      }
+    }
+
+    const FooWithStyles = withStyles('')(Foo);
+    const insertCss = sinon.spy(() => done);
+    const container = document.createElement('div');
+
+    ReactDOM.render(
+      <Provider insertCss={insertCss}>
+        <FooWithStyles />
+      </Provider>,
+      container
+    );
+    ReactDOM.unmountComponentAtNode(container);
+    expect(insertCss.calledOnce).to.be.true;
+  });
 
   it('Should set the displayName correctly', () => {
     expect(withStyles('')(
@@ -46,13 +84,13 @@ describe('withStyles(ComposedComponent, ...styles)', () => {
           return <div />;
         },
       })
-    ).displayName).to.equal('WithStyles(Component)');
+    ).displayName).to.be.oneOf(['WithStyles(Component)', 'WithStyles(Constructor)']);
   });
 
   it('Should expose the component with styles as ComposedComponent', () => {
     class Container extends Component {
       render() {
-        return <Passthrough />;
+        return <div />;
       }
     }
 
