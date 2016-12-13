@@ -2,17 +2,6 @@
 
 All notable changes to this project will be documented in this file.
 
-<<<<<<< HEAD
-### [Unreleased][unreleased]
-- Add `CHANGELOG.md` file with the past and future (planned) changes to the project
-
-> 2016-10-12
-
-- Add access to content to dedup server generated styles [PR#56](https://github.com/kriasoft/isomorphic-style-loader/pull/56)
-
-### [v1.0.0]
-> 2016-04-15
-=======
 ## [v1.1.0] - 2016-10-30
 
 - Disable source maps in IE9 and below, to prevent runtime errors in development mode ([#69](https://github.com/kriasoft/isomorphic-style-loader/pull/69))
@@ -25,7 +14,6 @@ All notable changes to this project will be documented in this file.
 - Add `CHANGELOG.md` file with the past and future (planned) changes to the project
 
 ## [v1.0.0] - 2016-04-15
->>>>>>> kriasoft/master
 
 - Improve comparability with Hot Module Replacement (HMR) ([#33](https://github.com/kriasoft/isomorphic-style-loader/pull/33))
 - Add support of ES2015+ decorator syntax, e.g. `@withStyles(s) class MyComponent extends Component { .. }`
