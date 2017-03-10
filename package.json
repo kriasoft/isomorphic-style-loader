@@ -84,5 +84,8 @@
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "build": "rimraf lib && babel src --out-dir lib",
     "prepublish": "rimraf lib && babel src --out-dir lib"
-  }
+  },
+  "files": [
+    "lib"
+  ]
 }
