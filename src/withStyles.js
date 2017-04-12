@@ -7,7 +7,8 @@
  * LICENSE.txt file in the root directory of this source tree.
  */
 
-import React, { Component, PropTypes } from 'react';
+import PropTypes            from 'prop-types';
+import React, { Component } from 'react';
 import hoistStatics from 'hoist-non-react-statics';
 
 const contextTypes = {
