@@ -11,7 +11,9 @@ import jsdom from 'jsdom';
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
 import sinon from 'sinon';
-import React, { createClass, Component, Children, PropTypes } from 'react';
+import React, { Component, Children } from 'react';
+import createClass from 'create-react-class';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import withStyles from '../src/withStyles';
 
