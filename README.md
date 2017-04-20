@@ -1,4 +1,4 @@
-<img width="150" height="150" align="right" src="https://raw.githubusercontent.com/kriasoft/isomorphic-style-loader/master/logo.svg" />
+<img width="150" height="150" align="right" src="https://raw.githubusercontent.com/kriasoft/isomorphic-style-loader/master/logo.png" />
 
 # Isomorphic CSS style loader for [Webpack](http://webpack.github.io)
 
