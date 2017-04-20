@@ -1,4 +1,4 @@
-<img src="https://cloud.githubusercontent.com/assets/8555194/19998202/ccab0da2-a26b-11e6-9c71-f0b904762c3b.png" width="150" height="150" />
+<img width="150" height="150" align="right" src="https://raw.githubusercontent.com/kriasoft/isomorphic-style-loader/master/logo.svg" />
 
 # Isomorphic CSS style loader for [Webpack](http://webpack.github.io)
 
@@ -174,7 +174,7 @@ because the [`debug` option has been removed](https://gist.github.com/sokra/27b2
 
 ### License
 
-The MIT License © 2015-2016 Kriasoft, LLC. All rights reserved.
+The MIT License © 2015-present Kriasoft, LLC. All rights reserved.
 
 ---
 Made with ♥ by Konstantin Tarkus ([@koistya](https://twitter.com/koistya)) and [contributors](https://github.com/kriasoft/isomorphic-style-loader/graphs/contributors)

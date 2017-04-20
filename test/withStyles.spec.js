@@ -1,7 +1,7 @@
 /**
  * Isomorphic CSS style loader for Webpack
  *
- * Copyright © 2015-2016 Kriasoft, LLC. All rights reserved.
+ * Copyright © 2015-present Kriasoft, LLC. All rights reserved.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE.txt file in the root directory of this source tree.
@@ -56,7 +56,7 @@ describe('withStyles(...styles)(WrappedComponent)', () => {
       <Provider insertCss={insertCss}>
         <FooWithStyles />
       </Provider>,
-      container
+      container,
     );
     ReactDOM.unmountComponentAtNode(container);
     expect(insertCss.calledOnce).to.be.true;
@@ -68,7 +68,7 @@ describe('withStyles(...styles)(WrappedComponent)', () => {
         render() {
           return <div />;
         }
-      }
+      },
     ).displayName).to.equal('WithStyles(Foo)');
 
     expect(withStyles('')(
@@ -77,7 +77,7 @@ describe('withStyles(...styles)(WrappedComponent)', () => {
         render() {
           return <div />;
         },
-      })
+      }),
     ).displayName).to.equal('WithStyles(Bar)');
 
     expect(withStyles('')(
@@ -85,7 +85,7 @@ describe('withStyles(...styles)(WrappedComponent)', () => {
         render() {
           return <div />;
         },
-      })
+      }),
     ).displayName).to.be.oneOf(['WithStyles(Component)', 'WithStyles(Constructor)']);
   });
 

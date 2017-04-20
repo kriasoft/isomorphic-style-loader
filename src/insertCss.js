@@ -1,7 +1,7 @@
 /**
  * Isomorphic CSS style loader for Webpack
  *
- * Copyright © 2015-2016 Kriasoft, LLC. All rights reserved.
+ * Copyright © 2015-present Kriasoft, LLC. All rights reserved.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE.txt file in the root directory of this source tree.
@@ -14,7 +14,7 @@ const inserted = {};
 // https://developer.mozilla.org/en-US/docs/Web/API/WindowBase64/Base64_encoding_and_decoding#The_Unicode_Problem
 function b64EncodeUnicode(str) {
   return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, (match, p1) =>
-    String.fromCharCode(`0x${p1}`)
+    String.fromCharCode(`0x${p1}`),
   ));
 }
 
@@ -23,14 +23,14 @@ function b64EncodeUnicode(str) {
  * if they are no longer referenced by UI components.
  */
 function removeCss(ids) {
-  for (const id of ids) {
+  ids.forEach((id) => {
     if (--inserted[id] <= 0) {
       const elem = document.getElementById(prefix + id);
       if (elem) {
         elem.parentNode.removeChild(elem);
       }
     }
-  }
+  });
 }
 
 /**
@@ -74,7 +74,7 @@ function insertCss(styles, { replace = false, prepend = false } = {}) {
     }
 
     let cssText = css;
-    if (sourceMap && btoa) { // skip IE9 and below, see http://caniuse.com/atob-btoa
+    if (sourceMap && typeof btoa === 'function') { // skip IE9 and below, see http://caniuse.com/atob-btoa
       cssText += `\n/*# sourceMappingURL=data:application/json;base64,${
         b64EncodeUnicode(JSON.stringify(sourceMap))}*/`;
       cssText += `\n/*# sourceURL=${sourceMap.file}?${id}*/`;
