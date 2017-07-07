@@ -7,49 +7,56 @@
 [![Build Status](http://img.shields.io/travis/kriasoft/isomorphic-style-loader/master.svg?style=flat-square)](https://travis-ci.org/kriasoft/isomorphic-style-loader)
 [![Coverage Status](https://img.shields.io/coveralls/kriasoft/isomorphic-style-loader.svg?style=flat-square)](https://coveralls.io/github/kriasoft/isomorphic-style-loader)
 [![Dependency Status](http://img.shields.io/david/kriasoft/isomorphic-style-loader.svg?style=flat-square)](https://david-dm.org/kriasoft/isomorphic-style-loader)
-[![Chat](http://img.shields.io/badge/chat_room-%23react--starter--kit-blue.svg?style=flat-square)](https://gitter.im/kriasoft/react-starter-kit)
 
-> An alternative CSS style loader, which works similarly to
-> [style-loader](https://github.com/webpack/style-loader), but is optimized for
-> [isomorphic apps](http://nerds.airbnb.com/isomorphic-javascript-future-web-apps/).
-> In addition to what style-loader provides, it allow to render
-> [critical path CSS](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/)
-> during server-side rendering (SSR), by adding two helper methods on to the
-> `styles` object - `._insertCss()` (injects CSS into the DOM) and `._getCss()`
-> (returns CSS string).
+CSS style loader for Webpack that works similarly to [style-loader](https://github.com/webpack/style-loader),
+but is optimized for [critical path CSS](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/)
+rendering and also works great in the context of [isomorphic apps](http://nerds.airbnb.com/isomorphic-javascript-future-web-apps/).
+It provides two helper methods on to the `styles` object - `._insertCss()` (injects CSS into the
+DOM) and `._getCss()` (returns a CSS string).
 
 See [getting started](#getting-started) &nbsp;|&nbsp; [changelog](CHANGELOG.md) &nbsp;|&nbsp;
 Join [#react-starter-kit](https://gitter.im/kriasoft/react-starter-kit) chat room on Gitter to stay
 up to date
 
+
 ### How to Install
 
-```
+```bash
 $ npm install isomorphic-style-loader --save-dev
 ```
+
 
 ### Getting Started
 
 ##### Webpack configuration:
 
 ```js
-{
+module.exports = {
+  /* ... */
   module: {
-    loaders: [
+    rules: [
       {
-        test: /\.scss$/,
-        loaders: [
+        test: /\.css$/,
+        use: [
           'isomorphic-style-loader',
-          'css-loader?modules&localIdentName=[name]_[local]_[hash:base64:3]',
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1
+            }
+          },
           'postcss-loader'
         ]
       }
     ]
   }
-}
+  /* ... */
+};
 ```
 
-**Note**: Configuration is the same for both client-side and server-side bundles.
+**Note**: Configuration is the same for both client-side and server-side bundles. For more
+information visit https://webpack.js.org/configuration/module/.
+
 
 ##### React component example
 
@@ -81,7 +88,7 @@ export default withStyles(s)(MyComponent);        // <--
 Just decorate your React component with the [withStyles](https://github.com/kriasoft/isomorphic-style-loader/blob/master/src/withStyles.js)
 higher-order component, and pass a function to your React app via `insertCss`
 context variable (see [React's context API](https://facebook.github.io/react/docs/context))
-that either calls `styles._insertCss()` on a client, or `styles._getCss()`
+that either calls `styles._insertCss()` on a client or `styles._getCss()`
 on the server. See server-side rendering example below:
 
 ```js
@@ -146,35 +153,25 @@ requested web page, effectively dealing with [FOUC](https://en.wikipedia.org/wik
 issue and improving client-side performance. CSS of the unmounted components
 will be removed from the DOM.
 
+
 ##### Hot Reload
 
 You can activate hot module reload for style by setting the `debug` option to true in your webpack
 configuration. If you are using webpack 2, you need to supply it though the `LoaderOptionsPlugin`
 because the [`debug` option has been removed](https://gist.github.com/sokra/27b24881210b56bbaff7#loader-options--minimize).
 
-### Backers
-
-♥ Isomorphic Style Loader? Help us keep it alive by [donating funds](https://www.patreon.com/tarkus) to cover project expenses!
-
-<a href="https://github.com/koistya" target="_blank">
-  <img src="https://github.com/koistya.png?size=64">
-</a>
-<a href="https://www.patreon.com/bePatron?patAmt=25&amp;u=2475816" target="_blank">
-  <img src="https://opencollective.com/static/images/become_backer.svg">
-</a>
 
 ### Related Projects
 
- * [React Starter Kit](https://github.com/kriasoft/react-starter-kit) — Isomorphic web app boilerplate
+* [React Starter Kit](https://github.com/kriasoft/react-starter-kit) — Isomorphic web app boilerplate (Express.js, React, Relay)
+* [Node.js API Starter](https://github.com/kriasoft/nodejs-api-starter) — Project tempalte for building GraphQL API backends
 
-### Support
-
- * [#react-starter-kit](https://gitter.im/kriasoft/react-starter-kit) on Gitter
- * [@koistya](https://www.codementor.io/koistya) on Codementor
 
 ### License
 
-The MIT License © 2015-present Kriasoft, LLC. All rights reserved.
+The MIT License © 2015-present Kriasoft ([@kriasoft](https://twitter.com/kriasoft)). All rights reserved.
 
 ---
-Made with ♥ by Konstantin Tarkus ([@koistya](https://twitter.com/koistya)) and [contributors](https://github.com/kriasoft/isomorphic-style-loader/graphs/contributors)
+Made with ♥ by Konstantin Tarkus ([@koistya](https://twitter.com/koistya),
+[blog](https://medium.com/@tarkus)), Vladimir Kutepov ([frenzzy](https://github.com/frenzzy))
+and [contributors](https://github.com/kriasoft/isomorphic-style-loader/graphs/contributors)

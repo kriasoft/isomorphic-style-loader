@@ -7,7 +7,7 @@
  * LICENSE.txt file in the root directory of this source tree.
  */
 
-import jsdom from 'jsdom';
+import { JSDOM } from 'jsdom';
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
 import sinon from 'sinon';
@@ -17,9 +17,11 @@ import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import withStyles from '../src/withStyles';
 
-global.document = jsdom.jsdom('<!doctype html><html><body></body></html>');
-global.window = document.defaultView;
-global.navigator = global.window.navigator;
+const { window } = new JSDOM('<!doctype html><html><body></body></html>');
+
+global.window = window;
+global.document = window.document;
+global.navigator = window.navigator;
 
 describe('withStyles(...styles)(WrappedComponent)', () => {
   it('Should call insetCss and removeCss functions provided by context', (done) => {

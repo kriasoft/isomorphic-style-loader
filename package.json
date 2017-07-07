@@ -1,11 +1,11 @@
 {
   "name": "isomorphic-style-loader",
-  "version": "2.0.0",
-  "description": "Isomorphic CSS style loader for Webpack",
+  "version": "3.0.0",
+  "description": "CSS style loader for Webpack optimized for critical path CSS rendering and isomoprhic web apps",
   "repository": "kriasoft/isomorphic-style-loader",
-  "author": "Kriasoft <support@kriasoft.com> (http://www.kriasoft.com)",
+  "author": "Kriasoft <hello@kriasoft.com> (https://www.kriasoft.com)",
   "contributors": [
-    "Konstantin Tarkus <hello@tarkus.me>",
+    "Konstantin Tarkus <hello@tarkus.me> (https://medium.com/@tarkus)",
     "Vladimir Kutepov <frenzzy.man@gmail.com>"
   ],
   "keywords": [
@@ -22,7 +22,11 @@
     "react",
     "reactjs",
     "isomorphic",
-    "universal"
+    "universal",
+    "critical-css",
+    "critical css",
+    "critical-path-css",
+    "critical path css"
   ],
   "license": "MIT",
   "main": "lib/index.js",
@@ -55,31 +59,31 @@
     "babel-runtime": "^6.23.0",
     "hoist-non-react-statics": "^2.0.0",
     "loader-utils": "^1.1.0",
-    "prop-types": "^15.5.8"
+    "prop-types": "^15.5.10"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
-    "babel-core": "^6.24.1",
-    "babel-eslint": "^7.2.2",
+    "babel-core": "^6.25.0",
+    "babel-eslint": "^7.2.3",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-latest": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-register": "^6.24.1",
-    "chai": "^3.5.0",
-    "coveralls": "^2.13.0",
-    "create-react-class": "^15.5.2",
+    "chai": "^4.0.2",
+    "coveralls": "^2.13.1",
+    "create-react-class": "^15.6.0",
     "eslint": "^3.19.0",
-    "eslint-config-airbnb": "^14.1.0",
-    "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-jsx-a11y": "^4.0.0",
-    "eslint-plugin-react": "^6.10.3",
+    "eslint-config-airbnb": "^15.0.2",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-react": "^7.1.0",
     "istanbul": "^1.1.0-alpha.1",
-    "jsdom": "^9.12.0",
-    "mocha": "^3.2.0",
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4",
+    "jsdom": "^11.1.0",
+    "mocha": "^3.4.2",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
     "rimraf": "^2.6.1",
-    "sinon": "^2.1.0"
+    "sinon": "^2.3.6"
   },
   "scripts": {
     "lint": "eslint src test",

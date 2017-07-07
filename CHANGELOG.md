@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v3.0.0] - 2017-07-07
+
+- Bump hoist-non-react-statics ([#97](https://github.com/kriasoft/isomorphic-style-loader/pull/97))
+
 ## [v2.0.0] - 2017-04-20
 
 - Pull `PropTypes` from [prop-types](https://www.npmjs.com/package/prop-types) package for compatibility with **React 15.3.0** and higher ([#90](https://github.com/kriasoft/isomorphic-style-loader/pull/90))
@@ -27,7 +31,8 @@ All notable changes to this project will be documented in this file.
 
 - Fix style not getting removed for multiple instance ([#23](https://github.com/kriasoft/isomorphic-style-loader/pull/23))
 
-[unreleased]: https://github.com/kriasoft/isomorphic-style-loader/compare/v2.0.0...HEAD
+[unreleased]: https://github.com/kriasoft/isomorphic-style-loader/compare/v3.0.0...HEAD
+[v3.0.0]: https://github.com/kriasoft/isomorphic-style-loader/compare/v2.0.0...v3.0.0
 [v2.0.0]: https://github.com/kriasoft/isomorphic-style-loader/compare/v1.1.0...v2.0.0
 [v1.1.0]: https://github.com/kriasoft/isomorphic-style-loader/compare/v1.0.0...v1.1.0
 [v1.0.0]: https://github.com/kriasoft/isomorphic-style-loader/compare/v0.0.12...v1.0.0
