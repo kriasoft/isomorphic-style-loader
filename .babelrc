@@ -1,0 +1,9 @@
+{
+  "presets": [
+    "react",
+    "latest"
+  ],
+  "plugins": [
+    "transform-runtime"
+  ]
+}

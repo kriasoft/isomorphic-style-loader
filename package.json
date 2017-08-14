@@ -1,6 +1,6 @@
 {
   "name": "isomorphic-style-loader",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "CSS style loader for Webpack optimized for critical path CSS rendering and isomoprhic web apps",
   "repository": "kriasoft/isomorphic-style-loader",
   "author": "Kriasoft <hello@kriasoft.com> (https://www.kriasoft.com)",
@@ -33,31 +33,9 @@
   "files": [
     "lib"
   ],
-  "babel": {
-    "presets": [
-      "react",
-      "latest"
-    ],
-    "plugins": [
-      "transform-runtime"
-    ]
-  },
-  "eslintConfig": {
-    "parser": "babel-eslint",
-    "extends": "airbnb",
-    "env": {
-      "browser": true
-    },
-    "rules": {
-      "import/no-extraneous-dependencies": "off",
-      "no-continue": "off",
-      "no-plusplus": "off",
-      "react/jsx-filename-extension": "off"
-    }
-  },
   "dependencies": {
-    "babel-runtime": "^6.23.0",
-    "hoist-non-react-statics": "^2.0.0",
+    "babel-runtime": "^6.25.0",
+    "hoist-non-react-statics": "^2.2.2",
     "loader-utils": "^1.1.0",
     "prop-types": "^15.5.10"
   },
@@ -69,27 +47,27 @@
     "babel-preset-latest": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-register": "^6.24.1",
-    "chai": "^4.0.2",
+    "chai": "^4.1.1",
     "coveralls": "^2.13.1",
     "create-react-class": "^15.6.0",
-    "eslint": "^3.19.0",
-    "eslint-config-airbnb": "^15.0.2",
+    "eslint": "^4.4.1",
+    "eslint-config-airbnb": "^15.1.0",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^6.0.2",
-    "eslint-plugin-react": "^7.1.0",
+    "eslint-plugin-react": "^7.2.0",
     "istanbul": "^1.1.0-alpha.1",
     "jsdom": "^11.1.0",
-    "mocha": "^3.4.2",
+    "mocha": "^3.5.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "rimraf": "^2.6.1",
-    "sinon": "^2.3.6"
+    "sinon": "^3.2.0"
   },
   "scripts": {
     "lint": "eslint src test",
     "test": "mocha test --compilers js:babel-register",
     "test:watch": "mocha --compilers js:babel-register --reporter min --watch",
-    "test:cover": "babel-node ./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha",
+    "test:cover": "istanbul cover ./node_modules/mocha/bin/_mocha -- --compilers js:babel-register",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "build": "rimraf lib && babel src --out-dir lib",
     "prepublish": "rimraf lib && babel src --out-dir lib"
