@@ -15,11 +15,20 @@ const contextTypes = {
   insertCss: PropTypes.func,
 };
 
+const propTypes = {
+  insertCss: PropTypes.func,
+};
+
+const defaultProps = {
+  insertCss: (...styles) => styles.forEach(style => style._insertCss()),
+};
+
 function withStyles(...styles) {
   return function wrapWithStyles(ComposedComponent) {
     class WithStyles extends Component {
       componentWillMount() {
-        this.removeCss = this.context.insertCss(...styles);
+        const insertCss = this.context.insertCss || this.props.insertCss;
+        this.removeCss = insertCss(...styles);
       }
 
       componentWillUnmount() {
@@ -37,6 +46,8 @@ function withStyles(...styles) {
 
     WithStyles.displayName = `WithStyles(${displayName})`;
     WithStyles.contextTypes = contextTypes;
+    WithStyles.propTypes = propTypes;
+    WithStyles.defaultProps = defaultProps;
     WithStyles.ComposedComponent = ComposedComponent;
 
     return hoistStatics(WithStyles, ComposedComponent);
