@@ -7,7 +7,17 @@
  * LICENSE.txt file in the root directory of this source tree.
  */
 
-const prefix = 's';
+function hash(s) {
+  var hash = 0, i, c;
+  if (s.length === 0) return hash;
+  for (i = 0; i < s.length; i++) {
+    c   = s.charCodeAt(i);
+    hash  = ((hash << 5) - hash) + c;
+    hash |= 0; // Convert to 32bit integer
+  }
+  return hash;
+};
+
 const inserted = {};
 
 // Base64 encoding and decoding - The "Unicode Problem"
@@ -25,7 +35,7 @@ function b64EncodeUnicode(str) {
 function removeCss(ids) {
   ids.forEach((id) => {
     if (--inserted[id] <= 0) {
-      const elem = document.getElementById(prefix + id);
+      const elem = document.getElementById(hash(id));
       if (elem) {
         elem.parentNode.removeChild(elem);
       }
@@ -58,7 +68,9 @@ function insertCss(styles, { replace = false, prepend = false } = {}) {
 
     inserted[id] = 1;
 
-    let elem = document.getElementById(prefix + id);
+    const eid = hash(id)
+
+    let elem = document.getElementById(eid);
     let create = false;
 
     if (!elem) {
@@ -66,7 +78,7 @@ function insertCss(styles, { replace = false, prepend = false } = {}) {
 
       elem = document.createElement('style');
       elem.setAttribute('type', 'text/css');
-      elem.id = prefix + id;
+      elem.id = eid;
 
       if (media) {
         elem.setAttribute('media', media);
