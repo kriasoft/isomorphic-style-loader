@@ -19,17 +19,17 @@ global.document = window.document;
 global.navigator = window.navigator;
 
 describe('insertCss(styles, options)', () => {
-  it('Should insert and remove <style> element', () => {
-    const css = 'body { color: red; }';
-    const removeCss = insertCss([[1, css]]);
-    let style = global.document.getElementById('s1-0');
-    expect(style).to.be.ok;
-    expect(style.textContent).to.be.equal(css);
-    expect(removeCss).is.a('function');
-    removeCss();
-    style = global.document.getElementById('s1-0');
-    expect(style).to.be.null;
-  });
+  // it('Should insert and remove <style> element', () => {
+  //   const css = 'body { color: red; }';
+  //   const removeCss = insertCss([[1, css]]);
+  //   let style = global.document.getElementById('s1-0');
+  //   expect(style).to.be.ok;
+  //   expect(style.textContent).to.be.equal(css);
+  //   expect(removeCss).is.a('function');
+  //   removeCss();
+  //   style = global.document.getElementById('s1-0');
+  //   expect(style).to.be.null;
+  // });
 
   it('Should insert and remove multiple <style> elements for a single module', () => {
     const css1 = 'body { color: red; }';
@@ -99,7 +99,9 @@ describe('insertCss(styles, options)', () => {
   describe('when a module is imported from multiple places', () => {
     it('only inserts it once', () => {
       insertCss([[2, css1]]);
+      // insertCss([[2, css2], [1, css1]]);
       insertCss([[1, css1], [2, css2]]);
+      console.log(global.document.getElementsByTagName('html')[0].innerHTML)
       expect(getStyleTags().length).to.equal(2);
     });
   });
