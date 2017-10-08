@@ -8,7 +8,7 @@
  */
 
 import { JSDOM } from 'jsdom';
-import { describe, it, beforeEach } from 'mocha';
+import { describe, it } from 'mocha';
 import { expect } from 'chai';
 import insertCss from '../src/insertCss';
 
@@ -96,7 +96,7 @@ describe('insertCss(styles, options)', () => {
       insertCss([[2, css1]]);
       // insertCss([[2, css2], [1, css1]]);
       insertCss([[1, css1], [2, css2]]);
-      console.log(global.document.getElementsByTagName('html')[0].innerHTML)
+      // console.log(global.document.getElementsByTagName('html')[0].innerHTML)
       expect(getStyleTags().length).to.equal(3);
     });
   });
