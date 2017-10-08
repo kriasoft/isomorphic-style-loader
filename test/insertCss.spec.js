@@ -54,18 +54,13 @@ function getStyleTags() {
 }
 
 describe('insertCss(styles, options)', () => {
-  beforeEach(() => {
-    insertCss._clearCache();
-    const styles = global.document.getElementsByTagName('style');
-    for (const style of styles) {
-      style.parentElement.removeChild(style);
-    }
-  });
-
   it('inserts a style element', () => {
-    insertCss([[1, css1]]);
+    const removeCss = insertCss([[1, css1]]);
     const styleTags = getStyleTags();
     expect(styleTags[0].textContent).to.equal(css1);
+    removeCss();
+    const style = global.document.getElementsByTagName('style');
+    expect(style.length).to.be.equal(0);
   });
 
   it('returns a function that removes the style element', () => {
@@ -102,7 +97,7 @@ describe('insertCss(styles, options)', () => {
       // insertCss([[2, css2], [1, css1]]);
       insertCss([[1, css1], [2, css2]]);
       console.log(global.document.getElementsByTagName('html')[0].innerHTML)
-      expect(getStyleTags().length).to.equal(2);
+      expect(getStyleTags().length).to.equal(3);
     });
   });
 });
