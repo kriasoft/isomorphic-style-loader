@@ -8,6 +8,7 @@
  */
 
 function hash(s) {
+  if (s.length < 20) return s
   var hash = 0, i, c;
   if (s.length === 0) return hash;
   for (i = 0; i < s.length; i++) {
@@ -18,6 +19,7 @@ function hash(s) {
   return hash;
 };
 
+const prefix = 's';
 const inserted = {};
 
 // Base64 encoding and decoding - The "Unicode Problem"
@@ -35,7 +37,7 @@ function b64EncodeUnicode(str) {
 function removeCss(ids) {
   ids.forEach((id) => {
     if (--inserted[id] <= 0) {
-      const elem = document.getElementById(hash(id));
+      const elem = document.getElementById(prefix + hash(id));
       if (elem) {
         elem.parentNode.removeChild(elem);
       }
@@ -68,7 +70,7 @@ function insertCss(styles, { replace = false, prepend = false } = {}) {
 
     inserted[id] = 1;
 
-    const eid = hash(id)
+    const eid = prefix + hash(id)
 
     let elem = document.getElementById(eid);
     let create = false;
