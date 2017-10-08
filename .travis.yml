@@ -1,9 +1,7 @@
 sudo: false
 language: node_js
 node_js:
-  - '6'
-  - '5'
-  - '4'
+  - stable
 script:
   - npm run test:cover
 after_success:
