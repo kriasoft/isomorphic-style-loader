@@ -29,7 +29,7 @@ module.exports.pitch = function pitch(remainingRequest) {
     module.exports._getContent = function() { return content; };
     module.exports._getCss = function() { return content.toString(); };
     module.exports._insertCss = function(options) { return insertCss(content, options) };
-    
+
     // Hot Module Replacement
     // https://webpack.github.io/docs/hot-module-replacement
     // Only activated in browser context
