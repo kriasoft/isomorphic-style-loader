@@ -11,15 +11,17 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import hoistStatics from 'hoist-non-react-statics';
 
-const contextTypes = {
-  insertCss: PropTypes.func,
-};
+const Context = React.createContext(() => {
+  throw new Error('Please place <InsertCssProvider value={insertCss}> on upper position in the component tree.');
+});
+export const InsertCssProvider = Context.Provider;
+const InsertCssConsumer = Context.Consumer;
 
-function withStyles(...styles) {
+export default function withStyles(...styles) {
   return function wrapWithStyles(ComposedComponent) {
-    class WithStyles extends Component {
+    class StyleAttacher extends Component {
       componentWillMount() {
-        this.removeCss = this.context.insertCss(...styles);
+        this.removeCss = this.props.insertCss(...styles);
       }
 
       componentWillUnmount() {
@@ -29,18 +31,27 @@ function withStyles(...styles) {
       }
 
       render() {
-        return <ComposedComponent {...this.props} />;
+        return <ComposedComponent {...this.props.originalProps} />;
       }
     }
+    StyleAttacher.propTypes = {
+      insertCss: PropTypes.func.isRequired,
+      // eslint-disable-next-line react/forbid-prop-types
+      originalProps: PropTypes.object.isRequired,
+    };
 
     const displayName = ComposedComponent.displayName || ComposedComponent.name || 'Component';
 
+    const WithStyles = props => (
+      <InsertCssConsumer>
+        {insertCss => <StyleAttacher insertCss={insertCss} originalProps={props} />}
+      </InsertCssConsumer>
+    );
+
     WithStyles.displayName = `WithStyles(${displayName})`;
-    WithStyles.contextTypes = contextTypes;
     WithStyles.ComposedComponent = ComposedComponent;
 
     return hoistStatics(WithStyles, ComposedComponent);
   };
 }
 
-export default withStyles;

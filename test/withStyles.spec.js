@@ -11,11 +11,11 @@ import { JSDOM } from 'jsdom';
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
 import sinon from 'sinon';
-import React, { Component, Children } from 'react';
+import React, { Component } from 'react';
 import createClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
-import withStyles from '../src/withStyles';
+import withStyles, { InsertCssProvider } from '../src/withStyles';
 
 const { window } = new JSDOM('<!doctype html><html><body></body></html>');
 
@@ -25,23 +25,19 @@ global.navigator = window.navigator;
 
 describe('withStyles(...styles)(WrappedComponent)', () => {
   it('Should call insetCss and removeCss functions provided by context', (done) => {
-    class Provider extends Component {
-      getChildContext() {
-        return { insertCss: this.props.insertCss };
-      }
+    const insertCss = sinon.spy(() => done);
 
+    class RootComponent extends Component {
       render() {
-        return Children.only(this.props.children);
+        return (
+          <InsertCssProvider value={insertCss}>
+            {this.props.children}
+          </InsertCssProvider>
+        );
       }
     }
-
-    Provider.propTypes = {
-      insertCss: PropTypes.func.isRequired,
-      children: PropTypes.node.isRequired,
-    };
-
-    Provider.childContextTypes = {
-      insertCss: PropTypes.func.isRequired,
+    RootComponent.propTypes = {
+      children: PropTypes.element.isRequired,
     };
 
     class Foo extends Component {
@@ -51,13 +47,12 @@ describe('withStyles(...styles)(WrappedComponent)', () => {
     }
 
     const FooWithStyles = withStyles('')(Foo);
-    const insertCss = sinon.spy(() => done);
-    const container = document.createElement('div');
 
+    const container = document.createElement('div');
     ReactDOM.render(
-      <Provider insertCss={insertCss}>
+      <RootComponent>
         <FooWithStyles />
-      </Provider>,
+      </RootComponent>,
       container,
     );
     ReactDOM.unmountComponentAtNode(container);
