@@ -69,11 +69,10 @@ information visit https://webpack.js.org/configuration/module/.
 ```js
 // MyComponent.js
 import React from 'react';
-import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './MyComponent.scss';
 
-function MyComponent(props, context) {
+function MyComponent(props) {
   return (
     <div className={s.root}>
       <h1 className={s.title}>Hello, world!</h1>
@@ -86,10 +85,28 @@ export default withStyles(s)(MyComponent);        // <--
 
 **P.S.**: It works great with [CSS Modules](https://github.com/css-modules/css-modules)!
 Just decorate your React component with the [withStyles](https://github.com/kriasoft/isomorphic-style-loader/blob/master/src/withStyles.js)
-higher-order component, and pass a function to your React app via `insertCss`
-context variable (see [React's context API](https://facebook.github.io/react/docs/context))
+higher-order component, and pass a `insertCss` function to your React app via `<InsertCssProvider value={insertCss}>`
+context provider (see [React's context API](https://reactjs.org/docs/context.html))
 that either calls `styles._insertCss()` on a client or `styles._getCss()`
-on the server. See server-side rendering example below:
+on the server.
+
+The context provider should appear in upper position in a component tree.
+
+```js
+// MyRootComponent.js
+import React from 'react';
+import {InsertCssProvider} from 'isomorphic-style-loader/lib/withStyles';
+
+export default function MyRootComponent(props) {
+  return (
+    <InsertCssProvider value={props.insertCss}>   // <--
+      {props.children}
+    </InsertCssProvider>
+  );
+}
+```
+
+And see server-side rendering example below:
 
 ```js
 import express from 'express';
@@ -102,7 +119,7 @@ const port = process.env.PORT || 3000;
 // Server-side rendering of the React app
 server.get('*', (req, res, next) => {
   const css = new Set(); // CSS for all rendered React components
-  const context = { insertCss: (...styles) => styles.forEach(style => css.add(style._getCss())); };
+  const insertCss = (...styles) => styles.forEach(style => css.add(style._getCss()));
   router.dispatch({ ...req, context }).then((component, state) => {
     const body = ReactDOM.renderToString(component);
     const html = `<!doctype html>
