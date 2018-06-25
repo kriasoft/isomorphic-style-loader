@@ -11,15 +11,17 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import hoistStatics from 'hoist-non-react-statics';
 
-const contextTypes = {
-  insertCss: PropTypes.func,
-};
+const Context = React.createContext(() => {
+  throw new Error('Please place <InsertCssProvider value={insertCss}> on upper position in the component tree.');
+});
+export const InsertCssProvider = Context.Provider;
+const InsertCssConsumer = Context.Consumer;
 
-function withStyles(...styles) {
+export default function withStyles(...styles) {
   return function wrapWithStyles(ComposedComponent) {
-    class WithStyles extends Component {
+    class StyleAttacher extends Component {
       componentWillMount() {
-        this.removeCss = this.context.insertCss(...styles);
+        this.removeCss = this.props.insertCss(...styles);
       }
 
       componentWillUnmount() {
@@ -29,18 +31,31 @@ function withStyles(...styles) {
       }
 
       render() {
-        return <ComposedComponent {...this.props} />;
+        return null;
       }
     }
 
+    StyleAttacher.propTypes = {
+      insertCss: PropTypes.func.isRequired,
+    };
+
     const displayName = ComposedComponent.displayName || ComposedComponent.name || 'Component';
 
+    const WithStyles = props => (
+      <React.Fragment>
+        {/* The reason I don't put <InsertCssConsumer> *inside of* <ComposedComponent> */}
+        {/* is to avoid this problem: https://github.com/apollographql/react-apollo/issues/1937 */}
+        <InsertCssConsumer>
+          {insertCss => <StyleAttacher insertCss={insertCss} />}
+        </InsertCssConsumer>
+        <ComposedComponent {...props} />
+      </React.Fragment>
+    );
+
     WithStyles.displayName = `WithStyles(${displayName})`;
-    WithStyles.contextTypes = contextTypes;
     WithStyles.ComposedComponent = ComposedComponent;
 
     return hoistStatics(WithStyles, ComposedComponent);
   };
 }
 
-export default withStyles;
