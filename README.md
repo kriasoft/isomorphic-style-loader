@@ -87,7 +87,7 @@ export default withStyles(s)(MyComponent);        // <--
 **P.S.**: It works great with [CSS Modules](https://github.com/css-modules/css-modules)!
 Just decorate your React component with the [withStyles](https://github.com/kriasoft/isomorphic-style-loader/blob/master/src/withStyles.js)
 higher-order component, and pass a function to your React app via `insertCss`
-context variable (see [React's context API](https://facebook.github.io/react/docs/context))
+context variable (see [React's context API](https://facebook.github.io/react/docs/context.html))
 that either calls `styles._insertCss()` on a client or `styles._getCss()`
 on the server. See server-side rendering example below:
 
