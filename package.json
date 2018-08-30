@@ -34,19 +34,19 @@
     "lib"
   ],
   "dependencies": {
-    "babel-runtime": "^6.25.0",
+    "@babel/runtime": "^7.0.0",
     "hoist-non-react-statics": "^2.2.2",
     "loader-utils": "^1.1.0",
     "prop-types": "^15.5.10"
   },
   "devDependencies": {
-    "babel-cli": "^6.24.1",
-    "babel-core": "^6.25.0",
-    "babel-eslint": "^7.2.3",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-latest": "^6.24.1",
-    "babel-preset-react": "^6.24.1",
-    "babel-register": "^6.24.1",
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0",
+    "@babel/plugin-transform-runtime": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/register": "^7.0.0",
+    "babel-eslint": "^9.0.0",
     "chai": "^4.1.1",
     "coveralls": "^2.13.1",
     "create-react-class": "^15.6.0",
@@ -65,9 +65,9 @@
   },
   "scripts": {
     "lint": "eslint src test",
-    "test": "mocha test --compilers js:babel-register",
-    "test:watch": "mocha --compilers js:babel-register --reporter min --watch",
-    "test:cover": "istanbul cover ./node_modules/mocha/bin/_mocha -- --compilers js:babel-register",
+    "test": "mocha test --compilers js:@babel/register",
+    "test:watch": "mocha --compilers js:@babel/register --reporter min --watch",
+    "test:cover": "istanbul cover ./node_modules/mocha/bin/_mocha -- --compilers js:@babel/register",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "build": "rimraf lib && babel src --out-dir lib",
     "prepublish": "rimraf lib && babel src --out-dir lib"
