@@ -11,7 +11,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import hoistStatics from 'hoist-non-react-statics';
 
-const contextTypes = {
+const contextType = {
   insertCss: PropTypes.func,
 };
 
@@ -36,7 +36,7 @@ function withStyles(...styles) {
     const displayName = ComposedComponent.displayName || ComposedComponent.name || 'Component';
 
     WithStyles.displayName = `WithStyles(${displayName})`;
-    WithStyles.contextTypes = contextTypes;
+    WithStyles.contextType = contextType;
     WithStyles.ComposedComponent = ComposedComponent;
 
     return hoistStatics(WithStyles, ComposedComponent);
