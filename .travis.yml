@@ -1,11 +1,27 @@
-sudo: false
+# For more information about the configurations used
+# in this file, please see the Travis CI documentation:
+# https://docs.travis-ci.com/user/languages/javascript-with-nodejs
+
 language: node_js
+
 node_js:
-  - '6'
-  - '5'
-  - '4'
+  - "node"
+  - "lts/*"
+
+cache:
+  directories:
+    - "node_modules"
+
+before_install:
+  - npm install --global codecov
+
 script:
   - npm run lint
-  - npm run test:cover
+  - npm run test -- --coverage
+  - npm run build
+
 after_success:
-  - npm run coveralls
+  - codecov
+
+notifications:
+  email: false
