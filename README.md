@@ -157,7 +157,7 @@ issue and improving client-side performance.
 CSS of the unmounted components will be removed from the DOM.
 
 Then on client-side use [hydrate](https://reactjs.org/docs/react-dom.html#hydrate)
-to make your application interactive:
+to make your markup interactive:
 
 ```js
 import React from 'react'
