@@ -17,6 +17,8 @@ import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import withStyles from '../src/withStyles';
 
+import StyleContext from '../src/styleContext';
+
 const { window } = new JSDOM('<!doctype html><html><body></body></html>');
 
 global.window = window;
@@ -24,24 +26,21 @@ global.document = window.document;
 global.navigator = window.navigator;
 
 describe('withStyles(...styles)(WrappedComponent)', () => {
-  it('Should call insetCss and removeCss functions provided by context', (done) => {
+  it('Should call insertCss and removeCss functions provided by context', (done) => {
     class Provider extends Component {
-      getChildContext() {
-        return { insertCss: this.props.insertCss };
-      }
-
       render() {
-        return Children.only(this.props.children);
+        const { insertCss } = this.props;
+        return (
+          <StyleContext.Provider value={{ insertCss }}>
+            {Children.only(this.props.children)}
+          </StyleContext.Provider>
+        );
       }
     }
 
     Provider.propTypes = {
       insertCss: PropTypes.func.isRequired,
       children: PropTypes.node.isRequired,
-    };
-
-    Provider.childContextTypes = {
-      insertCss: PropTypes.func.isRequired,
     };
 
     class Foo extends Component {
