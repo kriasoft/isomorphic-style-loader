@@ -41,11 +41,11 @@ function removeCss(ids) {
  *   // Remove it from the DOM
  *   removeCss();
  */
-function insertCss(styles, { replace = false, prepend = false } = {}) {
+function insertCss(styles, { replace = false, prepend = false, base = '' } = {}) {
   const ids = [];
   for (let i = 0; i < styles.length; i++) {
     const [moduleId, css, media, sourceMap] = styles[i];
-    const id = `${moduleId}-${i}`;
+    const id = `${base}${moduleId}-${i}`;
 
     ids.push(id);
 
