@@ -1,9 +1,10 @@
 sudo: false
 language: node_js
 node_js:
-  - '6'
-  - '5'
-  - '4'
+  - 'stable'
+  - 10
+  - 8
+  - 6
 script:
   - npm run lint
   - npm run test:cover
