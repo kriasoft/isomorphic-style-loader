@@ -21,7 +21,7 @@ function withStyles(...styles) {
       }
 
       componentWillUnmount() {
-        if (this.removeCss) {
+        if (typeof this.removeCss === 'function') {
           setTimeout(this.removeCss, 0);
         }
       }
