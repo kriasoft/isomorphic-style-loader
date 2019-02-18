@@ -7,6 +7,7 @@ yarn.lock
 
 # Compiled output
 dist/*
+!dist/insertCss*
 !dist/StyleContext*
 !dist/withStyles*
 

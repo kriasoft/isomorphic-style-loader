@@ -37,6 +37,11 @@ const files = [
     format: 'cjs',
     external: ['react'],
   },
+  {
+    input: 'dist/src/insertCss.js',
+    output: 'dist/insertCss.js',
+    format: 'cjs',
+  },
 ]
 
 async function build() {
