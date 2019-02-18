@@ -7,38 +7,38 @@
  * LICENSE.txt file in the root directory of this source tree.
  */
 
-import React, { Component } from 'react';
-import hoistStatics from 'hoist-non-react-statics';
+import React from 'react'
+import hoistStatics from 'hoist-non-react-statics'
 
-import StyleContext from './styleContext';
+import StyleContext from './StyleContext'
 
 function withStyles(...styles) {
   return function wrapWithStyles(ComposedComponent) {
-    class WithStyles extends Component {
+    class WithStyles extends React.PureComponent {
       constructor(props, context) {
-        super(props, context);
-        this.removeCss = context.insertCss(...styles);
+        super(props, context)
+        this.removeCss = context.insertCss(...styles)
       }
 
       componentWillUnmount() {
         if (this.removeCss) {
-          setTimeout(this.removeCss, 0);
+          setTimeout(this.removeCss, 0)
         }
       }
 
       render() {
-        return <ComposedComponent {...this.props} />;
+        return <ComposedComponent {...this.props} />
       }
     }
 
-    const displayName = ComposedComponent.displayName || ComposedComponent.name || 'Component';
+    const displayName = ComposedComponent.displayName || ComposedComponent.name || 'Component'
 
-    WithStyles.displayName = `WithStyles(${displayName})`;
-    WithStyles.contextType = StyleContext;
-    WithStyles.ComposedComponent = ComposedComponent;
+    WithStyles.displayName = `WithStyles(${displayName})`
+    WithStyles.contextType = StyleContext
+    WithStyles.ComposedComponent = ComposedComponent
 
-    return hoistStatics(WithStyles, ComposedComponent);
-  };
+    return hoistStatics(WithStyles, ComposedComponent)
+  }
 }
 
-export default withStyles;
+export default withStyles

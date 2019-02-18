@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v5.0.0] - 2019-02-18
+
+- Migration to new [Context API](https://reactjs.org/docs/context.html) introduced in React.js
+  [16.3.0](https://github.com/facebook/react/blob/master/CHANGELOG.md#1630-march-29-2018)
+  ([#141](https://github.com/kriasoft/isomorphic-style-loader/pull/141))
+- Update Babel and remove `babel-runtime` dependency
+  ([#137](https://github.com/kriasoft/isomorphic-style-loader/pull/137))
+- Allow to override style id prefix with `_insertCss({ prefix: 'any' })`
+  ([#124](https://github.com/kriasoft/isomorphic-style-loader/pull/124))
+
 ## [v4.0.0] - 2017-08-14
 
 - Bump hoist-non-react-statics and babel-runtime
@@ -38,7 +48,8 @@ All notable changes to this project will be documented in this file.
 
 - Fix style not getting removed for multiple instance ([#23](https://github.com/kriasoft/isomorphic-style-loader/pull/23))
 
-[unreleased]: https://github.com/kriasoft/isomorphic-style-loader/compare/v4.0.0...HEAD
+[unreleased]: https://github.com/kriasoft/isomorphic-style-loader/compare/v5.0.0...HEAD
+[v5.0.0]: https://github.com/kriasoft/isomorphic-style-loader/compare/v4.0.0...v5.0.0
 [v4.0.0]: https://github.com/kriasoft/isomorphic-style-loader/compare/v3.0.0...v4.0.0
 [v3.0.0]: https://github.com/kriasoft/isomorphic-style-loader/compare/v2.0.0...v3.0.0
 [v2.0.0]: https://github.com/kriasoft/isomorphic-style-loader/compare/v1.1.0...v2.0.0
