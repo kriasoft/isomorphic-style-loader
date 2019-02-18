@@ -2,15 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
+The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
+and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
+
 ## [v5.0.0] - 2019-02-18
 
 - Migration to new [Context API](https://reactjs.org/docs/context.html) introduced in React.js
   [16.3.0](https://github.com/facebook/react/blob/master/CHANGELOG.md#1630-march-29-2018)
   ([#141](https://github.com/kriasoft/isomorphic-style-loader/pull/141))
-- Update Babel and remove `babel-runtime` dependency
-  ([#137](https://github.com/kriasoft/isomorphic-style-loader/pull/137))
-- Allow to override style id prefix with `_insertCss({ prefix: 'any' })`
+  ```diff
+  - import withStyles from 'isomorphic-style-loader/lib/withStyles';
+  + import withStyles from 'isomorphic-style-loader/withStyles';
+  ```
+- Allow to override style id prefix with `_insertCss({ prefix: 's' })`
   ([#124](https://github.com/kriasoft/isomorphic-style-loader/pull/124))
+- Update [hoist-non-react-statics](https://github.com/mridgway/hoist-non-react-statics) from v2 to v3
+- Remove `babel-runtime` dependency
 
 ## [v4.0.0] - 2017-08-14
 
