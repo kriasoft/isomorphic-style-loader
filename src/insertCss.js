@@ -7,6 +7,18 @@
  * LICENSE.txt file in the root directory of this source tree.
  */
 
+function hash(s) {
+  if (s.length < 20) return s
+  var hash = 0, i, c;
+  if (s.length === 0) return hash;
+  for (i = 0; i < s.length; i++) {
+    c   = s.charCodeAt(i);
+    hash  = ((hash << 5) - hash) + c;
+    hash |= 0; // Convert to 32bit integer
+  }
+  return hash;
+};
+
 const prefix = 's';
 const inserted = {};
 
@@ -25,7 +37,7 @@ function b64EncodeUnicode(str) {
 function removeCss(ids) {
   ids.forEach((id) => {
     if (--inserted[id] <= 0) {
-      const elem = document.getElementById(prefix + id);
+      const elem = document.getElementById(prefix + hash(id));
       if (elem) {
         elem.parentNode.removeChild(elem);
       }
@@ -58,7 +70,9 @@ function insertCss(styles, { replace = false, prepend = false, base = '' } = {})
 
     inserted[id] = 1;
 
-    let elem = document.getElementById(prefix + id);
+    const eid = prefix + hash(id)
+
+    let elem = document.getElementById(eid);
     let create = false;
 
     if (!elem) {
@@ -66,7 +80,7 @@ function insertCss(styles, { replace = false, prepend = false, base = '' } = {})
 
       elem = document.createElement('style');
       elem.setAttribute('type', 'text/css');
-      elem.id = prefix + id;
+      elem.id = eid;
 
       if (media) {
         elem.setAttribute('media', media);

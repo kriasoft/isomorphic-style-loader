@@ -19,17 +19,17 @@ global.document = window.document;
 global.navigator = window.navigator;
 
 describe('insertCss(styles, options)', () => {
-  it('Should insert and remove <style> element', () => {
-    const css = 'body { color: red; }';
-    const removeCss = insertCss([[1, css]]);
-    let style = global.document.getElementById('s1-0');
-    expect(style).to.be.ok;
-    expect(style.textContent).to.be.equal(css);
-    expect(removeCss).is.a('function');
-    removeCss();
-    style = global.document.getElementById('s1-0');
-    expect(style).to.be.null;
-  });
+  // it('Should insert and remove <style> element', () => {
+  //   const css = 'body { color: red; }';
+  //   const removeCss = insertCss([[1, css]]);
+  //   let style = global.document.getElementById('s1-0');
+  //   expect(style).to.be.ok;
+  //   expect(style.textContent).to.be.equal(css);
+  //   expect(removeCss).is.a('function');
+  //   removeCss();
+  //   style = global.document.getElementById('s1-0');
+  //   expect(style).to.be.null;
+  // });
 
   it('Should insert and remove multiple <style> elements for a single module', () => {
     const css1 = 'body { color: red; }';
@@ -43,5 +43,61 @@ describe('insertCss(styles, options)', () => {
     removeCss();
     style = global.document.getElementsByTagName('style');
     expect(style.length).to.be.equal(0);
+  });
+});
+
+const css1 = 'body { color: red; }';
+const css2 = 'body { color: blue; }';
+
+function getStyleTags() {
+  return global.document.getElementsByTagName('style');
+}
+
+describe('insertCss(styles, options)', () => {
+  it('inserts a style element', () => {
+    const removeCss = insertCss([[1, css1]]);
+    const styleTags = getStyleTags();
+    expect(styleTags[0].textContent).to.equal(css1);
+    removeCss();
+    const style = global.document.getElementsByTagName('style');
+    expect(style.length).to.be.equal(0);
+  });
+
+  it('returns a function that removes the style element', () => {
+    const removeCss = insertCss([[1, css1]]);
+    expect(removeCss).to.be.a('function');
+    removeCss();
+    const styleTags = getStyleTags();
+    expect(styleTags.length).to.equal(0);
+  });
+
+  describe('when a module is added a second time', () => {
+    it('does nothing', () => {
+      insertCss([[1, css1]]);
+      insertCss([[1, css2]]);
+      const styleTags = getStyleTags();
+      expect(styleTags.length).to.equal(1);
+      expect(styleTags[0].textContent).to.equal(css1);
+    });
+
+    describe('and options.replace is set to true', () => {
+      it('replaces the first module', () => {
+        insertCss([[1, css1]]);
+        insertCss([[1, css2]], { replace: true });
+        const styleTags = getStyleTags();
+        expect(styleTags.length).to.equal(1);
+        expect(styleTags[0].textContent).to.equal(css2);
+      });
+    });
+  });
+
+  describe('when a module is imported from multiple places', () => {
+    it('only inserts it once', () => {
+      insertCss([[2, css1]]);
+      // insertCss([[2, css2], [1, css1]]);
+      insertCss([[1, css1], [2, css2]]);
+      // console.log(global.document.getElementsByTagName('html')[0].innerHTML)
+      expect(getStyleTags().length).to.equal(3);
+    });
   });
 });
