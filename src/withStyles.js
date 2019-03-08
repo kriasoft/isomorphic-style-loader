@@ -15,9 +15,9 @@ import StyleContext from './StyleContext'
 function withStyles(...styles) {
   return function wrapWithStyles(ComposedComponent) {
     class WithStyles extends React.PureComponent {
-      constructor(props) {
-        super(props)
-        this.removeCss = this.context.insertCss(...styles)
+      constructor(props, context) {
+        super(props, context)
+        this.removeCss = context.insertCss(...styles)
       }
 
       componentWillUnmount() {
