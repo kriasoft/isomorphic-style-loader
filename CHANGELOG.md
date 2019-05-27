@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [v5.1.0] - 2019-05-27
+
+- Add useStyles(style) hook for React.js ([#159](https://github.com/kriasoft/isomorphic-style-loader/pull/159))
+
 ## [v5.0.0] - 2019-02-18
 
 - Migration to new [Context API](https://reactjs.org/docs/context.html) introduced in React.js
@@ -55,7 +59,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Fix style not getting removed for multiple instance ([#23](https://github.com/kriasoft/isomorphic-style-loader/pull/23))
 
-[unreleased]: https://github.com/kriasoft/isomorphic-style-loader/compare/v5.0.0...HEAD
+[unreleased]: https://github.com/kriasoft/isomorphic-style-loader/compare/v5.1.0...HEAD
+[v5.1.0]: https://github.com/kriasoft/isomorphic-style-loader/compare/v5.0.0...v5.1.0
 [v5.0.0]: https://github.com/kriasoft/isomorphic-style-loader/compare/v4.0.0...v5.0.0
 [v4.0.0]: https://github.com/kriasoft/isomorphic-style-loader/compare/v3.0.0...v4.0.0
 [v3.0.0]: https://github.com/kriasoft/isomorphic-style-loader/compare/v2.0.0...v3.0.0
