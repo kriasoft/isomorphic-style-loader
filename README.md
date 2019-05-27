@@ -178,6 +178,28 @@ ReactDOM.hydrate(
 )
 ```
 
+**React Hooks Support:**
+
+You can also use `useStyles` inside your React Functional Components, instead of using `withStyles`.
+Please note that you still need to pass `insertCss` function to `StyleContext.Provider` from top of the tree.
+
+```js
+import React from 'react'
+import useStyles from 'isomorphic-style-loader/useStyles'
+import s from './App.scss'
+
+const App = (props) => {
+  useStyles(s);
+  return (
+    <div className={s.root}>
+      <h1 className={s.title}>Hello, world!</h1>
+    </div>
+  )
+};
+
+export default App;
+```
+
 ## Related Projects
 
 * [React Starter Kit](https://github.com/kriasoft/react-starter-kit) —

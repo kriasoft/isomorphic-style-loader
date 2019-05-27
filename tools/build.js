@@ -32,6 +32,13 @@ const files = [
     paths: { [path.resolve('dist/src/StyleContext.js')]: './StyleContext.js' },
   },
   {
+    input: 'dist/src/useStyles.js',
+    output: 'dist/useStyles.js',
+    format: 'cjs',
+    external: ['react', path.resolve('dist/src/StyleContext.js')],
+    paths: { [path.resolve('dist/src/StyleContext.js')]: './StyleContext.js' },
+  },
+  {
     input: 'dist/src/StyleContext.js',
     output: 'dist/StyleContext.js',
     format: 'cjs',
