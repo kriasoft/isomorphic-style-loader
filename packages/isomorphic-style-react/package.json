@@ -44,6 +44,6 @@
     "fix": "eslint --fix src test tools",
     "test": "node tools/test",
     "build": "node tools/build",
-    "pre-commit": "node tools/pre-commit"
+    "pre-commit": "npm run lint && npm run test"
   }
 }
