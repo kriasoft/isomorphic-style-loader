@@ -4,9 +4,13 @@
   },
   "extends": [
     "airbnb",
-    "eslint-config-prettier"
+    "prettier"
+  ],
+  "plugins": [
+    "prettier"
   ],
   "rules": {
+    "prettier/prettier": "error",
     "react/jsx-filename-extension": "off",
     "no-plusplus": "off",
     "no-continue": "off"

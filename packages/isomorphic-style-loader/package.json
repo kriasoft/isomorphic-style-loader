@@ -35,7 +35,8 @@
     "loader-utils": "^1.2.3"
   },
   "scripts": {
-    "lint": "node tools/lint",
+    "lint": "eslint src test tools",
+    "fix": "eslint --fix src test tools",
     "test": "node tools/test",
     "build": "node tools/build",
     "pre-commit": "node tools/pre-commit"
