@@ -16,9 +16,10 @@ before_install:
   - npm install --global codecov
 
 script:
-  - npm run lint
-  - npm run test -- --coverage
-  - npm run build
+  - npx lerna run bootstrap
+  - npx lerna run lint
+  - npx lerna run test -- --coverage
+  - npx lerna run build
 
 after_success:
   - codecov
