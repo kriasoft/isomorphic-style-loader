@@ -29,5 +29,8 @@
     "critical css",
     "critical-path-css",
     "critical path css"
-  ]
+  ],
+  "devDependencies": {
+    "lerna": "^3.14.1"
+  }
 }
