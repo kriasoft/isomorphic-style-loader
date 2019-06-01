@@ -4,6 +4,7 @@
   },
   "rules": {
     "import/no-extraneous-dependencies": ["error", {
+      "packageDir": ["./", "../../"],
       "optionalDependencies": false,
       "peerDependencies": false
     }],
