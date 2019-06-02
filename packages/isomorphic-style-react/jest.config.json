@@ -1,0 +1,8 @@
+{
+  "modulePathIgnorePatterns": [
+    "<rootDir>/dist/"
+  ],
+  "testMatch": [
+    "**/*.test.js"
+  ]
+}

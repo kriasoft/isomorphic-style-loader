@@ -39,7 +39,8 @@
     "@babel/preset-env": "^7.3.1",
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.0.0",
-    "babel-jest": "^24.1.0",
+    "babel-jest": "^24.8.0",
+    "babel-polyfill": "^6.26.0",
     "create-react-class": "^15.6.3",
     "eslint": "^5.14.0",
     "eslint-config-airbnb": "^17.1.0",
@@ -61,5 +62,8 @@
     "rollup-plugin-commonjs": "^9.2.0",
     "rollup-plugin-node-resolve": "^4.0.0",
     "rollup-plugin-uglify": "^6.0.2"
+  },
+  "scripts": {
+    "pre-commit": "lerna run lint && lerna run test"
   }
 }

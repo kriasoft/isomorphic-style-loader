@@ -37,8 +37,7 @@
   "scripts": {
     "lint": "eslint src test tools",
     "fix": "eslint --fix src test tools",
-    "test": "node tools/test",
-    "build": "node tools/build",
-    "pre-commit": "npm run lint && npm run test"
+    "test": "jest",
+    "build": "node tools/build"
   }
 }
