@@ -17,6 +17,7 @@ function withStyles(...styles) {
     class WithStyles extends React.PureComponent {
       constructor(props, context) {
         super(props, context)
+        this.markServerDuplicatedStyles();
         this.removeCss = context.insertCss(...styles)
       }
 
@@ -26,8 +27,41 @@ function withStyles(...styles) {
         }
       }
 
+      markServerDuplicatedStyles() {
+        const { isServer, css } = this.context;
+        if (!isServer) { return; }
+
+        styles.forEach(style => {
+          if(css.has(style._getCss())) {
+            style.isDuplicate = true;
+          } else {
+            style.isDuplicate = false;
+          }
+        });
+      }
+
+      renderStyles() {
+        const { isServer } = this.context;
+        if (!isServer) { return null; }
+        if (isServer
+          && styles.every(style => style.isDuplicate)
+        ) { return null; }
+        return (
+          <style type="text/css">
+            { styles.map(style => style.isDuplicate ?
+            '' : style._getCss()
+            )}
+          </style>
+        );
+      }
+
       render() {
-        return <ComposedComponent {...this.props} />
+        return (
+          <React.Fragment>
+            { this.renderStyles() }
+            <ComposedComponent {...this.props} />
+          </React.Fragment>
+        )
       }
     }
 

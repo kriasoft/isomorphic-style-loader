@@ -25,6 +25,9 @@ function withStyles() {
         var _this;
 
         _this = _React$PureComponent.call(this, props, context) || this;
+
+        _this.markServerDuplicatedStyles();
+
         _this.removeCss = context.insertCss.apply(context, styles);
         return _this;
       }
@@ -37,8 +40,46 @@ function withStyles() {
         }
       };
 
+      _proto.markServerDuplicatedStyles = function markServerDuplicatedStyles() {
+        var _this$context = this.context,
+            isServer = _this$context.isServer,
+            css = _this$context.css;
+
+        if (!isServer) {
+          return;
+        }
+
+        styles.forEach(function (style) {
+          if (css.has(style._getCss())) {
+            style.isDuplicate = true;
+          } else {
+            style.isDuplicate = false;
+          }
+        });
+      };
+
+      _proto.renderStyles = function renderStyles() {
+        var isServer = this.context.isServer;
+
+        if (!isServer) {
+          return null;
+        }
+
+        if (isServer && styles.every(function (style) {
+          return style.isDuplicate;
+        })) {
+          return null;
+        }
+
+        return React.createElement("style", {
+          type: "text/css"
+        }, styles.map(function (style) {
+          return style.isDuplicate ? '' : style._getCss();
+        }));
+      };
+
       _proto.render = function render() {
-        return React.createElement(ComposedComponent, this.props);
+        return React.createElement(React.Fragment, null, this.renderStyles(), React.createElement(ComposedComponent, this.props));
       };
 
       return WithStyles;
