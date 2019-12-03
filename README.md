@@ -205,7 +205,7 @@ export default App;
 * [React Starter Kit](https://github.com/kriasoft/react-starter-kit) —
   Isomorphic web app boilerplate (Express.js, React, Relay)
 * [Node.js API Starter](https://github.com/kriasoft/nodejs-api-starter) —
-  Project tempalte for building GraphQL API backends
+  Project template for building GraphQL API backends
 
 ## License
 
