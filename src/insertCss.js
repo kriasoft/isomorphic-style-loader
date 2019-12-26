@@ -82,16 +82,13 @@ function insertCss(styles, { replace = false, prepend = false, prefix = 's' } = 
       )}*/`
       cssText += `\n/*# sourceURL=${sourceMap.file}?${id}*/`
     }
-
-  
-
+    
     if (create) {
         if ('textContent' in elem) {
           elem.textContent = cssText
         } else {
           elem.styleSheet.cssText = cssText
         }
-      
       if (prepend) {
         document.head.insertBefore(elem, document.head.childNodes[0])
       } else {
