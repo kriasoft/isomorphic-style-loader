@@ -8,6 +8,7 @@
  */
 
 import React from 'react'
+import PropTypes from 'prop-types'
 import hoistStatics from 'hoist-non-react-statics'
 
 import StyleContext from './StyleContext'
@@ -27,17 +28,29 @@ function withStyles(...styles) {
       }
 
       render() {
-        return <ComposedComponent {...this.props} />
+        const { __$$withStylesRef, ...props } = this.props
+        return <ComposedComponent ref={__$$withStylesRef} {...props} />
       }
     }
 
     const displayName = ComposedComponent.displayName || ComposedComponent.name || 'Component'
 
-    WithStyles.displayName = `WithStyles(${displayName})`
+    WithStyles.propTypes = {
+      __$$withStylesRef: PropTypes.func,
+    }
+    WithStyles.defaultProps = {
+      __$$withStylesRef: undefined,
+    }
     WithStyles.contextType = StyleContext
-    WithStyles.ComposedComponent = ComposedComponent
 
-    return hoistStatics(WithStyles, ComposedComponent)
+    const ForwardedWithStyles = React.forwardRef((props, ref) => (
+      <WithStyles {...props} __$$withStylesRef={ref} />
+    ))
+
+    ForwardedWithStyles.ComposedComponent = ComposedComponent
+    ForwardedWithStyles.displayName = `WithStyles(${displayName})`
+
+    return hoistStatics(ForwardedWithStyles, ComposedComponent)
   }
 }
 
