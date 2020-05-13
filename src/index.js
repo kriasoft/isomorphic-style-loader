@@ -26,7 +26,9 @@ module.exports.pitch = function pitch(request) {
     exports._getCss = function() { return '' + css; };
     exports._insertCss = function(options) { return insertCss(content, options) };
 
-    ${this.hot ? `
+    ${
+      this.hot
+        ? `
     // Hot Module Replacement
     // https://webpack.github.io/docs/hot-module-replacement
     // Only activated in browser context
@@ -39,6 +41,8 @@ module.exports.pitch = function pitch(request) {
       });
       module.hot.dispose(function() { removeCss(); });
     }
-  ` : ''}
+  `
+        : ''
+    }
   `
 }
