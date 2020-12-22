@@ -22,9 +22,9 @@ module.exports.pitch = function pitch(request) {
     var insertCss = require(${stringifyRequest(this, `!${insertCss}`)});
     var content = typeof css === 'string' ? [[module.id, css, '']] : css;
 
-    exports = module.exports = css.locals || {};
+    exports = module.exports = css.default ? css.default : css.locals || {};
     exports._getContent = function() { return content; };
-    exports._getCss = function() { return '' + css; };
+    exports._getCss = function() { return '' + (css.default ? css.default : css); };
     exports._insertCss = function(options) { return insertCss(content, options) };
 
     // Hot Module Replacement

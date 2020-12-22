@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "isomorphic-style-loader",
-  "version": "5.1.0",
+  "version": "5.2.0",
   "description": "CSS style loader for Webpack optimized for critical path CSS rendering and isomoprhic web apps",
   "repository": "kriasoft/isomorphic-style-loader",
   "author": "Kriasoft <hello@kriasoft.com> (https://www.kriasoft.com)",
@@ -33,7 +33,7 @@
   "main": "src/index.js",
   "dependencies": {
     "hoist-non-react-statics": "^3.0.0",
-    "loader-utils": "^1.2.3",
+    "loader-utils": "^2.0.0",
     "react": "^16.3.0"
   },
   "devDependencies": {
