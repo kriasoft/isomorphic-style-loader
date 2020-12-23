@@ -20,11 +20,11 @@ module.exports.pitch = function pitch(request) {
     var refs = 0;
     var css = require(${stringifyRequest(this, `!!${request}`)});
     var insertCss = require(${stringifyRequest(this, `!${insertCss}`)});
-    var content = typeof css === 'string' ? [[module.id, css, '']] : css;
+    var content = typeof css.default === 'string' ? [[module.id, css.default, '']] : css;
 
-    exports = module.exports = css.default ? css.default : css.locals || {};
+    exports = module.exports = css || {};
     exports._getContent = function() { return content; };
-    exports._getCss = function() { return '' + (css.default ? css.default : css); };
+    exports._getCss = function() { return '' + css.default; };
     exports._insertCss = function(options) { return insertCss(content, options) };
 
     // Hot Module Replacement
@@ -34,6 +34,9 @@ module.exports.pitch = function pitch(request) {
       var removeCss = function() {};
       module.hot.accept(${stringifyRequest(this, `!!${request}`)}, function() {
         css = require(${stringifyRequest(this, `!!${request}`)});
+        if(css.default) {
+          css = css.default
+        }
         content = typeof css === 'string' ? [[module.id, css, '']] : css;
         removeCss = insertCss(content, { replace: true });
       });
