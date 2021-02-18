@@ -64,7 +64,7 @@ function insertCss(styles, _temp) {
       }
     }
 
-    var cssText = '' + css;
+    var cssText = "" + css;
 
     if (sourceMap && typeof btoa === 'function') {
       cssText += "\n/*# sourceMappingURL=data:application/json;base64," + b64EncodeUnicode(JSON.stringify(sourceMap)) + "*/";

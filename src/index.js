@@ -25,6 +25,15 @@ module.exports.pitch = function pitch(request) {
     var insertCss = require(${stringifyRequest(this, `!${insertCss}`)});
     var content = [[module.id, css, '']];
 
+    //lift locals up
+    if(typeof css === 'object' && typeof css.locals === 'object') {
+      Object.keys(css.locals).forEach((k) => {
+        if(k.indexOf('-') === -1) {
+          css[k] = css.locals[k]
+        }
+      })
+    }
+
     exports = module.exports = css || {};
     exports._getContent = function() { return content; };
     exports._getCss = function() { return '' + css; };
