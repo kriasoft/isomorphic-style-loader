@@ -74,7 +74,7 @@ function insertCss(styles, { replace = false, prepend = false, prefix = 's' } = 
       }
     }
 
-    let cssText = css
+    let cssText = `${css}`
     if (sourceMap && typeof btoa === 'function') {
       // skip IE9 and below, see http://caniuse.com/atob-btoa
       cssText += `\n/*# sourceMappingURL=data:application/json;base64,${b64EncodeUnicode(

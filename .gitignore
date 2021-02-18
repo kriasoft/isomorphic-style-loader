@@ -11,6 +11,7 @@ dist/*
 !dist/insertCss*
 !dist/StyleContext*
 !dist/withStyles*
+!dist/useStyles*
 
 # Test coverage
 coverage/

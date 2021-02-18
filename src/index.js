@@ -19,12 +19,15 @@ module.exports.pitch = function pitch(request) {
   return `
     var refs = 0;
     var css = require(${stringifyRequest(this, `!!${request}`)});
+    if(css.default) {
+      css = css.default
+    }
     var insertCss = require(${stringifyRequest(this, `!${insertCss}`)});
-    var content = typeof css.default === 'string' ? [[module.id, css.default, '']] : css;
+    var content = [[module.id, css, '']];
 
     exports = module.exports = css || {};
     exports._getContent = function() { return content; };
-    exports._getCss = function() { return '' + css.default; };
+    exports._getCss = function() { return '' + css; };
     exports._insertCss = function(options) { return insertCss(content, options) };
 
     // Hot Module Replacement
@@ -37,7 +40,7 @@ module.exports.pitch = function pitch(request) {
         if(css.default) {
           css = css.default
         }
-        content = typeof css === 'string' ? [[module.id, css, '']] : css;
+        content = [[module.id, css, '']];
         removeCss = insertCss(content, { replace: true });
       });
       module.hot.dispose(function() { removeCss(); });
