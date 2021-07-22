@@ -5,7 +5,7 @@
 [![NPM version](https://img.shields.io/npm/v/isomorphic-style-loader.svg)](https://www.npmjs.com/package/isomorphic-style-loader)
 [![NPM downloads](https://img.shields.io/npm/dw/isomorphic-style-loader.svg)](https://www.npmjs.com/package/isomorphic-style-loader)
 [![Library Size](https://img.shields.io/github/size/kriasoft/isomorphic-style-loader/src/withStyles.js.svg)](https://bundlephobia.com/result?p=isomorphic-style-loader)
-[![Online Chat](https://badges.gitter.im/kriasoft/isomorphic-style-loader.svg)](https://gitter.im/kriasoft/react-starter-kit)
+[![Online Chat](https://img.shields.io/discord/643523529131950086?label=Chat)](https://discord.gg/UFkeXwsARY)
 
 CSS style loader for Webpack that works similarly to
 [style-loader](https://github.com/webpack/style-loader), but is optimized for
@@ -16,8 +16,8 @@ It provides two helper methods on to the `styles` object - `._insertCss()`
 (injects CSS into the DOM) and `._getCss()` (returns a CSS string).
 
 See [getting started](#getting-started) &nbsp;|&nbsp; [changelog](CHANGELOG.md) &nbsp;|&nbsp;
-Join [#react-starter-kit](https://gitter.im/kriasoft/react-starter-kit)
-chat room on Gitter to stay up to date
+Join [#isomorphic-style-loader](https://discord.gg/UFkeXwsARY)
+chat room on Discord to stay up to date
 
 ## How to Install
 
