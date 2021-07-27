@@ -10,6 +10,7 @@
 const jest = require('jest')
 
 const jestConfig = {
+  testEnvironment: 'jsdom',
   modulePathIgnorePatterns: ['<rootDir>/dist/'],
   testMatch: ['**/*.test.js'],
 }
