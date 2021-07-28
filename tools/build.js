@@ -77,6 +77,7 @@ async function build() {
               [
                 '@babel/preset-env',
                 {
+                  corejs: 3,
                   modules: false,
                   loose: true,
                   useBuiltIns: 'entry',
