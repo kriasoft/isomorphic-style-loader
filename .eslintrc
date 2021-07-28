@@ -7,8 +7,9 @@
     "eslint-config-prettier"
   ],
   "rules": {
-    "react/jsx-filename-extension": "off",
+    "no-continue": "off",
     "no-plusplus": "off",
-    "no-continue": "off"
+    "react/jsx-filename-extension": "off",
+    "react/jsx-props-no-spreading": "off"
   }
 }
