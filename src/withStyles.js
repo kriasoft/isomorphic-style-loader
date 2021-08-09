@@ -7,40 +7,51 @@
  * LICENSE.txt file in the root directory of this source tree.
  */
 
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import hoistStatics from 'hoist-non-react-statics';
+import React from 'react'
+import PropTypes from 'prop-types'
+import hoistStatics from 'hoist-non-react-statics'
 
-const contextTypes = {
-  insertCss: PropTypes.func,
-};
+import StyleContext from './StyleContext'
 
 function withStyles(...styles) {
   return function wrapWithStyles(ComposedComponent) {
-    class WithStyles extends Component {
-      componentWillMount() {
-        this.removeCss = this.context.insertCss(...styles);
+    class WithStyles extends React.PureComponent {
+      constructor(props, context) {
+        super(props, context)
+        this.removeCss = context.insertCss(...styles)
       }
 
       componentWillUnmount() {
         if (typeof this.removeCss === 'function') {
-          setTimeout(this.removeCss, 0);
+          setTimeout(this.removeCss, 0)
         }
       }
 
       render() {
-        return <ComposedComponent {...this.props} />;
+        const { __$$withStylesRef, ...props } = this.props
+        return <ComposedComponent ref={__$$withStylesRef} {...props} />
       }
     }
 
-    const displayName = ComposedComponent.displayName || ComposedComponent.name || 'Component';
+    const displayName = ComposedComponent.displayName || ComposedComponent.name || 'Component'
 
-    WithStyles.displayName = `WithStyles(${displayName})`;
-    WithStyles.contextTypes = contextTypes;
-    WithStyles.ComposedComponent = ComposedComponent;
+    WithStyles.propTypes = {
+      __$$withStylesRef: PropTypes.func,
+    }
+    WithStyles.defaultProps = {
+      __$$withStylesRef: undefined,
+    }
+    WithStyles.contextType = StyleContext
 
-    return hoistStatics(WithStyles, ComposedComponent);
-  };
+    const ForwardedWithStyles = React.forwardRef((props, ref) => (
+      <WithStyles {...props} __$$withStylesRef={ref} />
+    ))
+
+    ForwardedWithStyles.ComposedComponent = ComposedComponent
+    ForwardedWithStyles.displayName = `WithStyles(${displayName})`
+
+    return hoistStatics(ForwardedWithStyles, ComposedComponent)
+  }
 }
 
-export default withStyles;
+export default withStyles

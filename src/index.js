@@ -7,44 +7,37 @@
  * LICENSE.txt file in the root directory of this source tree.
  */
 
-import path from 'path';
-import { stringifyRequest } from 'loader-utils';
+import { stringifyRequest } from 'loader-utils'
 
-module.exports = function loader() {};
-module.exports.pitch = function pitch(remainingRequest) {
+module.exports = function loader() {}
+module.exports.pitch = function pitch(request) {
   if (this.cacheable) {
-    this.cacheable();
+    this.cacheable()
   }
 
-  const insertCssPath = path.join(__dirname, './insertCss.js');
+  const insertCss = require.resolve('./insertCss.js')
   return `
-    var content = require(${stringifyRequest(this, `!!${remainingRequest}`)});
-    var insertCss = require(${stringifyRequest(this, `!${insertCssPath}`)});
+    var refs = 0;
+    var css = require(${stringifyRequest(this, `!!${request}`)});
+    var insertCss = require(${stringifyRequest(this, `!${insertCss}`)});
+    var content = typeof css === 'string' ? [[module.id, css, '']] : css;
 
-    if (typeof content === 'string') {
-      content = [[module.id, content, '']];
-    }
+    exports = module.exports = css.locals || {};
+    exports._getContent = function() { return content; };
+    exports._getCss = function() { return '' + css; };
+    exports._insertCss = function(options) { return insertCss(content, options) };
 
-    module.exports = content.locals || {};
-    module.exports._getContent = function() { return content; };
-    module.exports._getCss = function() { return content.toString(); };
-    module.exports._insertCss = function(options) { return insertCss(content, options) };
-    
     // Hot Module Replacement
     // https://webpack.github.io/docs/hot-module-replacement
     // Only activated in browser context
     if (module.hot && typeof window !== 'undefined' && window.document) {
       var removeCss = function() {};
-      module.hot.accept(${stringifyRequest(this, `!!${remainingRequest}`)}, function() {
-        content = require(${stringifyRequest(this, `!!${remainingRequest}`)});
-
-        if (typeof content === 'string') {
-          content = [[module.id, content, '']];
-        }
-
+      module.hot.accept(${stringifyRequest(this, `!!${request}`)}, function() {
+        css = require(${stringifyRequest(this, `!!${request}`)});
+        content = typeof css === 'string' ? [[module.id, css, '']] : css;
         removeCss = insertCss(content, { replace: true });
       });
       module.hot.dispose(function() { removeCss(); });
     }
-  `;
-};
+  `
+}

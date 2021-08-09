@@ -1,9 +1,10 @@
 {
   "presets": [
-    "react",
-    "latest"
-  ],
-  "plugins": [
-    "transform-runtime"
+    "@babel/preset-react",
+    ["@babel/preset-env", {
+      "targets": {
+        "node": "current"
+      }
+    }]
   ]
 }
