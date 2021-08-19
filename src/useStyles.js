@@ -13,7 +13,7 @@ import StyleContext from './StyleContext'
 // To detect if it's in SSR process or in browser. Wrapping with
 // the function makes rollup's replacement of "this" avoidable
 // eslint-disable-next-line func-names
-const isBrowser = (() => this && typeof this.window === 'object')()
+const isBrowser = (() => typeof window === 'object')()
 
 function useStyles(...styles) {
   const { insertCss } = useContext(StyleContext)
