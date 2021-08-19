@@ -25,7 +25,7 @@ function useStyles(...styles) {
     }
   }
   if (isBrowser) {
-    useEffect(runEffect, [])
+    useEffect(runEffect, styles)
   } else {
     runEffect()
   }
