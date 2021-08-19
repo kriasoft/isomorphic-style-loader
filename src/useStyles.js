@@ -7,7 +7,7 @@
  * LICENSE.txt file in the root directory of this source tree.
  */
 
-import { useContext, useEffect } from 'react'
+import { useContext, useLayoutEffect } from 'react'
 import StyleContext from './StyleContext'
 
 // To detect if it's in SSR process or in browser. Wrapping with
@@ -25,7 +25,7 @@ function useStyles(...styles) {
     }
   }
   if (isBrowser) {
-    useEffect(runEffect, styles)
+    useLayoutEffect(runEffect, styles)
   } else {
     runEffect()
   }
