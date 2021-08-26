@@ -36,11 +36,16 @@ function withStyles(...styles) {
     const displayName = ComposedComponent.displayName || ComposedComponent.name || 'Component'
 
     WithStyles.propTypes = {
-      __$$withStylesRef: PropTypes.func,
+      __$$withStylesRef: PropTypes.oneOfType([
+        PropTypes.func,
+        PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+      ]),
     }
+
     WithStyles.defaultProps = {
       __$$withStylesRef: undefined,
     }
+
     WithStyles.contextType = StyleContext
 
     const ForwardedWithStyles = React.forwardRef((props, ref) => (
