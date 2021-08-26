@@ -38,7 +38,9 @@ function withStyles(...styles) {
     WithStyles.propTypes = {
       __$$withStylesRef: PropTypes.oneOfType([
         PropTypes.func,
-        PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+        PropTypes.shape({
+          current: PropTypes.instanceOf(typeof Element === 'undefined' ? Function : Element),
+        }),
       ]),
     }
 
