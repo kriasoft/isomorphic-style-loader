@@ -78,7 +78,7 @@ function withStyles() {
       var _proto = WithStyles.prototype;
 
       _proto.componentWillUnmount = function componentWillUnmount() {
-        if (this.removeCss) {
+        if (typeof this.removeCss === 'function') {
           setTimeout(this.removeCss, 0);
         }
       };
@@ -98,7 +98,9 @@ function withStyles() {
 
     var displayName = ComposedComponent.displayName || ComposedComponent.name || 'Component';
     WithStyles.propTypes = {
-      __$$withStylesRef: PropTypes.func
+      __$$withStylesRef: PropTypes.oneOfType([PropTypes.func, PropTypes.shape({
+        current: PropTypes.instanceOf(Element)
+      })])
     };
     WithStyles.defaultProps = {
       __$$withStylesRef: undefined
