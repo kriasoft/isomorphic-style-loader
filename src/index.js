@@ -7,7 +7,7 @@
  * LICENSE.txt file in the root directory of this source tree.
  */
 
-import { stringifyRequest } from 'loader-utils'
+import { stringifyRequest, getOptions } from 'loader-utils'
 
 module.exports = function loader() {}
 module.exports.pitch = function pitch(request) {
@@ -16,9 +16,12 @@ module.exports.pitch = function pitch(request) {
   }
 
   const insertCss = require.resolve('./insertCss.js')
+  let { getCss } = getOptions(this)
+  getCss = typeof getCss === 'function' ? getCss : (css) => css
   return `
     var refs = 0;
-    var css = require(${stringifyRequest(this, `!!${request}`)});
+    var getCss = ${getCss.toString()};
+    var css = getCss(require(${stringifyRequest(this, `!!${request}`)}));
     var insertCss = require(${stringifyRequest(this, `!${insertCss}`)});
     var content = typeof css === 'string' ? [[module.id, css, '']] : css;
 
