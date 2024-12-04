@@ -17,7 +17,6 @@ module.exports.pitch = function pitch(request) {
 
   const insertCss = require.resolve('./insertCss.js')
   return `
-    var refs = 0;
     var css = require(${stringifyRequest(this, `!!${request}`)});
     var insertCss = require(${stringifyRequest(this, `!${insertCss}`)});
     var content = typeof css === 'string' ? [[module.id, css, '']] : css;
@@ -27,6 +26,9 @@ module.exports.pitch = function pitch(request) {
     exports._getCss = function() { return '' + css; };
     exports._insertCss = function(options) { return insertCss(content, options) };
 
+    ${
+      this.hot
+        ? `
     // Hot Module Replacement
     // https://webpack.github.io/docs/hot-module-replacement
     // Only activated in browser context
@@ -38,6 +40,9 @@ module.exports.pitch = function pitch(request) {
         removeCss = insertCss(content, { replace: true });
       });
       module.hot.dispose(function() { removeCss(); });
+    }
+  `
+        : ''
     }
   `
 }
