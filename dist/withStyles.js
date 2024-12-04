@@ -8,94 +8,62 @@ var hoistStatics = require('hoist-non-react-statics');
 var StyleContext = require('./StyleContext.js');
 
 function _extends() {
-  _extends = Object.assign || function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
+  return _extends = Object.assign ? Object.assign.bind() : function (n) {
+    for (var e = 1; e < arguments.length; e++) {
+      var t = arguments[e];
+      for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]);
     }
-
-    return target;
-  };
-
-  return _extends.apply(this, arguments);
+    return n;
+  }, _extends.apply(null, arguments);
 }
-
-function _inheritsLoose(subClass, superClass) {
-  subClass.prototype = Object.create(superClass.prototype);
-  subClass.prototype.constructor = subClass;
-
-  _setPrototypeOf(subClass, superClass);
+function _inheritsLoose(t, o) {
+  t.prototype = Object.create(o.prototype), t.prototype.constructor = t, _setPrototypeOf(t, o);
 }
-
-function _setPrototypeOf(o, p) {
-  _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
-    o.__proto__ = p;
-    return o;
-  };
-
-  return _setPrototypeOf(o, p);
-}
-
-function _objectWithoutPropertiesLoose(source, excluded) {
-  if (source == null) return {};
-  var target = {};
-  var sourceKeys = Object.keys(source);
-  var key, i;
-
-  for (i = 0; i < sourceKeys.length; i++) {
-    key = sourceKeys[i];
-    if (excluded.indexOf(key) >= 0) continue;
-    target[key] = source[key];
+function _objectWithoutPropertiesLoose(r, e) {
+  if (null == r) return {};
+  var t = {};
+  for (var n in r) if ({}.hasOwnProperty.call(r, n)) {
+    if (e.includes(n)) continue;
+    t[n] = r[n];
   }
-
-  return target;
+  return t;
+}
+function _setPrototypeOf(t, e) {
+  return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) {
+    return t.__proto__ = e, t;
+  }, _setPrototypeOf(t, e);
 }
 
 var _excluded = ["__$$withStylesRef"];
-
 function withStyles() {
   for (var _len = arguments.length, styles = new Array(_len), _key = 0; _key < _len; _key++) {
     styles[_key] = arguments[_key];
   }
-
   return function wrapWithStyles(ComposedComponent) {
     var WithStyles = function (_React$PureComponent) {
-      _inheritsLoose(WithStyles, _React$PureComponent);
-
       function WithStyles(props, context) {
         var _this;
-
         _this = _React$PureComponent.call(this, props, context) || this;
         _this.removeCss = context.insertCss.apply(context, styles);
         return _this;
       }
-
+      _inheritsLoose(WithStyles, _React$PureComponent);
       var _proto = WithStyles.prototype;
-
       _proto.componentWillUnmount = function componentWillUnmount() {
         if (typeof this.removeCss === 'function') {
           setTimeout(this.removeCss, 0);
         }
       };
-
       _proto.render = function render() {
         var _this$props = this.props,
-            __$$withStylesRef = _this$props.__$$withStylesRef,
-            props = _objectWithoutPropertiesLoose(_this$props, _excluded);
-
+          __$$withStylesRef = _this$props.__$$withStylesRef,
+          props = _objectWithoutPropertiesLoose(_this$props, _excluded);
         return React.createElement(ComposedComponent, _extends({
           ref: __$$withStylesRef
         }, props));
       };
-
       return WithStyles;
     }(React.PureComponent);
-
     var displayName = ComposedComponent.displayName || ComposedComponent.name || 'Component';
     WithStyles.propTypes = {
       __$$withStylesRef: PropTypes.oneOfType([PropTypes.func, PropTypes.shape({
