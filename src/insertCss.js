@@ -7,6 +7,8 @@
  * LICENSE.txt file in the root directory of this source tree.
  */
 
+const createUniqueIdentifiers = require('./createUniqueIdentifiers')
+
 const inserted = {}
 
 // Base64 encoding and decoding - The "Unicode Problem"
@@ -44,9 +46,10 @@ function removeCss(ids) {
  */
 function insertCss(styles, { replace = false, prepend = false, prefix = 's' } = {}) {
   const ids = []
+  const identifiers = createUniqueIdentifiers(styles.map(([moduleId]) => moduleId))
   for (let i = 0; i < styles.length; i++) {
-    const [moduleId, css, media, sourceMap] = styles[i]
-    const id = `${prefix}${moduleId}-${i}`
+    const [, css, media, sourceMap] = styles[i]
+    const id = `${prefix}${identifiers[i]}`
 
     ids.push(id)
 

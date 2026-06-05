@@ -13,12 +13,12 @@ describe('insertCss(styles, options)', () => {
   it('Should insert and remove <style> element', () => {
     const css = 'body { color: red; }'
     const removeCss = insertCss([[1, css]])
-    let style = global.document.getElementById('s1-0')
+    let style = global.document.getElementById('s1')
     expect(style).toBeDefined()
     expect(style.textContent).toBe(css)
     expect(removeCss).toBeDefined()
     removeCss()
-    style = global.document.getElementById('s1-0')
+    style = global.document.getElementById('s1')
     expect(style).toBeNull
   })
 
@@ -37,5 +37,19 @@ describe('insertCss(styles, options)', () => {
     removeCss()
     style = global.document.getElementsByTagName('style')
     expect(style).toHaveLength(0)
+  })
+
+  it('Should reuse the <style> element of a module regardless of its position', () => {
+    const css = 'body { color: green; }'
+    const removeCss1 = insertCss([[2, css]])
+    const removeCss2 = insertCss([
+      [3, 'body { margin: 0; }'],
+      [2, css],
+    ])
+    const style = global.document.getElementsByTagName('style')
+    expect(style).toHaveLength(2)
+    removeCss1()
+    removeCss2()
+    expect(global.document.getElementsByTagName('style')).toHaveLength(0)
   })
 })
