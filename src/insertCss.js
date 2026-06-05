@@ -42,7 +42,7 @@ function removeCss(ids) {
  *   // Remove it from the DOM
  *   removeCss();
  */
-function insertCss(styles, { replace = false, prepend = false, prefix = 's', type } = {}) {
+function insertCss(styles, { replace = false, prepend = false, prefix = 's' } = {}) {
   const ids = []
   for (let i = 0; i < styles.length; i++) {
     const [moduleId, css, media, sourceMap] = styles[i]
@@ -66,8 +66,6 @@ function insertCss(styles, { replace = false, prepend = false, prefix = 's', typ
       create = true
 
       elem = document.createElement('style')
-      if (type === undefined || typeof type === 'string')
-        elem.setAttribute('type', type || 'text/css')
       elem.id = id
 
       if (media) {
