@@ -25,6 +25,23 @@ chat room on Discord to stay up to date
 $ npm install isomorphic-style-loader --save-dev
 ```
 
+## Requirements
+
+- Webpack 5
+- React 16.8 or newer
+- `css-loader` configured with `esModule: false` (the loader reads CSS module
+  class names from `exports.locals`)
+
+The optional `getCss` loader option is serialized into the generated module,
+so it must be a self-contained function without closed-over variables.
+
+## Breaking Changes in v6
+
+- Static properties of the wrapped component (e.g. `fetchData`) are no longer
+  hoisted onto the component returned by `withStyles`. Access them via the
+  `ComposedComponent` property instead.
+- `prop-types` validation has been removed.
+
 ## Getting Started
 
 **Webpack configuration:**
@@ -41,7 +58,8 @@ module.exports = {
           {
             loader: 'css-loader',
             options: {
-              importLoaders: 1
+              importLoaders: 1,
+              esModule: false
             }
           },
           'postcss-loader'
