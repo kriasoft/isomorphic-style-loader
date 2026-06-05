@@ -11,12 +11,20 @@ import React from 'react'
 
 import StyleContext from './StyleContext'
 
+const isBrowser = typeof window !== 'undefined'
+
 function withStyles(...styles) {
   return function wrapWithStyles(ComposedComponent) {
     class WithStyles extends React.PureComponent {
       constructor(props, context) {
         super(props, context)
-        this.removeCss = context.insertCss(...styles)
+        if (!isBrowser) {
+          context.insertCss(...styles)
+        }
+      }
+
+      componentDidMount() {
+        this.removeCss = this.context.insertCss(...styles)
       }
 
       componentWillUnmount() {

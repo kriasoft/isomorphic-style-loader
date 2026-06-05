@@ -40,6 +40,53 @@ describe('withStyles(...styles)(WrappedComponent)', () => {
     expect(insertCss).toHaveBeenCalledTimes(1)
   })
 
+  it('Should pair every insertCss call with exactly one removeCss call in StrictMode', () => {
+    jest.useFakeTimers()
+    try {
+      class Foo extends Component {
+        render() {
+          return <div />
+        }
+      }
+
+      const FooWithStyles = withStyles('')(Foo)
+      const removers = []
+      const insertCss = jest.fn(() => {
+        const removeCss = jest.fn()
+        removers.push(removeCss)
+        return removeCss
+      })
+      const container = global.document.createElement('div')
+
+      const root = createRoot(container)
+      act(() => {
+        root.render(
+          <React.StrictMode>
+            <StyleContext.Provider value={{ insertCss }}>
+              <FooWithStyles />
+            </StyleContext.Provider>
+          </React.StrictMode>,
+        )
+      })
+      act(() => {
+        jest.runAllTimers()
+      })
+      act(() => {
+        root.unmount()
+      })
+      act(() => {
+        jest.runAllTimers()
+      })
+
+      expect(insertCss).toHaveBeenCalled()
+      removers.forEach((removeCss) => {
+        expect(removeCss).toHaveBeenCalledTimes(1)
+      })
+    } finally {
+      jest.useRealTimers()
+    }
+  })
+
   it('Should set the displayName correctly', () => {
     expect(
       withStyles('')(
