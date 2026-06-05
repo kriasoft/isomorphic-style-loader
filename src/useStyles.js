@@ -23,7 +23,7 @@ function useStyles(...styles) {
   }
   if (isBrowser) {
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    useLayoutEffect(runEffect, [])
+    useLayoutEffect(runEffect, [insertCss])
   } else {
     runEffect()
   }
