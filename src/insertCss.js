@@ -9,14 +9,14 @@
 
 import createUniqueIdentifiers from './createUniqueIdentifiers'
 
-const inserted = {}
+const inserted = Object.create(null)
 
 // Base64 encoding and decoding - The "Unicode Problem"
 // https://developer.mozilla.org/en-US/docs/Web/API/WindowBase64/Base64_encoding_and_decoding#The_Unicode_Problem
 function b64EncodeUnicode(str) {
   return btoa(
     encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, (match, p1) =>
-      String.fromCharCode(`0x${p1}`),
+      String.fromCharCode(parseInt(p1, 16)),
     ),
   )
 }
@@ -28,6 +28,7 @@ function b64EncodeUnicode(str) {
 function removeCss(ids) {
   ids.forEach((id) => {
     if (--inserted[id] <= 0) {
+      delete inserted[id]
       const elem = document.getElementById(id)
       if (elem) {
         elem.parentNode.removeChild(elem)
@@ -51,16 +52,16 @@ function insertCss(styles, { replace = false, prepend = false, prefix = 's' } = 
     const [, css, media, sourceMap] = styles[i]
     const id = `${prefix}${identifiers[i]}`
 
-    ids.push(id)
-
     if (inserted[id]) {
       if (!replace) {
         inserted[id]++
+        ids.push(id)
         continue
       }
+    } else {
+      inserted[id] = 1
+      ids.push(id)
     }
-
-    inserted[id] = 1
 
     let elem = document.getElementById(id)
     let create = false
@@ -77,19 +78,14 @@ function insertCss(styles, { replace = false, prepend = false, prefix = 's' } = 
     }
 
     let cssText = css
-    if (sourceMap && typeof btoa === 'function') {
-      // skip IE9 and below, see http://caniuse.com/atob-btoa
+    if (sourceMap) {
       cssText += `\n/*# sourceMappingURL=data:application/json;base64,${b64EncodeUnicode(
         JSON.stringify(sourceMap),
       )}*/`
       cssText += `\n/*# sourceURL=${sourceMap.file}?${id}*/`
     }
 
-    if ('textContent' in elem) {
-      elem.textContent = cssText
-    } else {
-      elem.styleSheet.cssText = cssText
-    }
+    elem.textContent = cssText
 
     if (create) {
       if (prepend) {
@@ -100,7 +96,12 @@ function insertCss(styles, { replace = false, prepend = false, prefix = 's' } = 
     }
   }
 
-  return removeCss.bind(null, ids)
+  let removed = false
+  return () => {
+    if (removed) return
+    removed = true
+    removeCss(ids)
+  }
 }
 
 export default insertCss

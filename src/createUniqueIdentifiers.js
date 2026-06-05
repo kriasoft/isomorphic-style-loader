@@ -12,7 +12,7 @@
  * to duplicates, e.g. ['1', '2', '2'] => ['1', '2', '2_1'].
  */
 function createUniqueIdentifiers(identifiers) {
-  const dupeCount = {}
+  const dupeCount = Object.create(null)
 
   return identifiers.map((identifier) => {
     if (typeof dupeCount[identifier] !== 'undefined') {
